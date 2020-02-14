@@ -1,11 +1,13 @@
 import React from 'react'
 
-function Nav() {
+class Nav extends React.Component{
+		render(){
 		return (
 				<nav className='navbar'>
-				This is the navbar
+						This is the navbar
 				</nav>
-		)
+		);
+		}
 }
 
 export default Nav
