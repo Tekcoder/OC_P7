@@ -7,7 +7,7 @@ class Nav extends React.Component{
 						This is the navbar
 				</nav>
 		);
-		}
+	}
 }
 
 export default Nav
