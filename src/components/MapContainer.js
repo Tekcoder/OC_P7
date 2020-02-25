@@ -1,21 +1,34 @@
-import React from 'react'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import React, { Component } from 'react'
+import L from '../../node_modules/leaflet'
+import { Map, TileLayer, Marker, Popup } from '../../node_modules/react-leaflet'
 
-export class MapContainer extends React.Component {
-	render() {
-		return (
-			<Map google={this.props.google} zoom={14}>
-
-			<Marker onClick={this.onMarkerClick}
-			name={'Current location'} />
-
-			<InfoWindow onClose={this.onInfoWindowClose}>
-			</InfoWindow>
-			</Map>
-		);
-	}
+type State = {
+  lat: number,
+  lng: number,
+  zoom: number,
 }
 
-export default GoogleApiWrapper({
-  apiKey: ("AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0")
-})(MapContainer)
+export default class MapContainer extends Component<{}, State> {
+	state = {
+		lat: 51.505,
+		lng: -0.09,
+		zoom: 13,
+	}
+
+	render() {
+		const position = [this.state.lat, this.state.lng]
+		return (
+			<Map className='map' center={position} zoom={this.state.zoom}>
+				<TileLayer
+				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				/>
+				<Marker position={position} >
+					<Popup>
+						A pretty CSS3 popup. <br /> Easily customizable.
+					</Popup>
+				</Marker>
+			</Map>
+		)
+	}
+}
