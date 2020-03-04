@@ -3,37 +3,49 @@ html, body{
 	height: 100%;
 }
 
+p{
+	color:crimson;
+}
+
 .App {
-		text-align: center;
-		margin: auto;
+	text-align: center;
+	margin: auto;
 }
 
 body{
-		background-color: whitesmoke;
+	background-image: url(./img/Background-Graphics-For-Websites4.jpg)
 }
 
 .map{
-	height: 400px;
+	height: 440px;
+	width: 800px;
+	margin:auto;
+	overflow:hidden;
+	border: 2px solid #00008B;
+	border-radius: 5px;
+	box-shadow: 3px 3px 5px #00008B;
 }
 
 .header{
-	height: 100px;
+	height: 90px;
 	background-color:#333;
 	color: whitesmoke;
 	margin-bottom:15px;
 	font-size: 30px;
 	display: flex;
+	border-radius: 5px;
 	justify-content: center;
 	align-items: center;
 }
 
 .footer{
-	height: 100px;
+	height: 90px;
 	bottom:0;
 	position: absolute;
 	width: 100%;
 	background-color:#333;
 	color: whitesmoke;
+	border-radius: 5px;
 	font-size: 30px;
 	display: flex;
 	justify-content: center;

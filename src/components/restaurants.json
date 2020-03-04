@@ -1,66 +1,69 @@
 [
-   {
-      "restaurantName":"Bronco",
-      "address":"39 Rue des Petites Écuries, 75010 Paris",
-      "lat":48.8737815,
-      "long":2.3501649,
-      "ratings":[
-         {
-            "stars":4,
-            "comment":"Great! But not many veggie options."
-         },
-         {
-            "stars":5,
-            "comment":"My favorite restaurant!"
-         }
-      ]
-   },
-   {
-      "restaurantName":"Babalou",
-      "address":"4 Rue Lamarck, 75018 Paris",
-      "lat":48.8865035,
-      "long":2.3442197,
-      "ratings":[
-         {
-            "stars":5,
-            "comment":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-            "stars":3,
-            "comment":"Meh, it was fine."
-         }
-      ]
-   },
-   {
-      "restaurantName":"Yalami",
-      "address":"13 Rue Napoleon, 75038 Paris",
-      "lat":43.7757631,
-      "long":5.5431965,
-      "ratings":[
-         {
-            "stars":5,
-            "comment":"Great place to have lunch. Or dinner. Or both actually."
-         },
-         {
-            "stars":5,
-            "comment":"dude it was awesome! I'd seriously recommend it to anyone who likes pizza!"
-         }
-      ]
-   },
-   {
-      "restaurantName":"Babalou",
-      "address":"4 Rue Lamarck, 75018 Paris",
-      "lat":48.8865035,
-      "long":2.3442197,
-      "ratings":[
-         {
-            "stars":5,
-            "comment":"Tiny pizzeria next to Sacre Coeur!"
-         },
-         {
-            "stars":3,
-            "comment":"Meh, it was fine."
-         }
-      ]
-   }
+	{
+		"id" : 1,
+		"restaurantName":"Bronco",
+		"address":"39 Rue des Petites Écuries, 75010 Paris",
+		"lat":48.8737815,
+		"long":2.3501649,
+		"ratings":[
+			{
+				"stars":4,
+				"comment":"Great! But not many veggie options."
+			},
+			{
+				"stars":5,
+				"comment":"My favorite restaurant!"
+			}
+		]
+	},
+	{
+		"id" : 2,
+		"restaurantName":"Babalou",
+		"address":"4 Rue Lamarck, 75018 Paris",
+		"lat":48.8865035,
+		"long":2.3442197,
+		"ratings":[
+			{
+				"stars":5,
+				"comment":"Tiny pizzeria next to Sacre Coeur!"
+			},
+			{
+				"stars":3,
+				"comment":"Meh, it was fine."
+			}
+		]
+	},
+	{
+		"id" : 3,
+		"restaurantName":"Yalami",
+		"address":"13 Rue Napoleon, 75038 Paris",
+		"lat":47.7757631,
+		"long":3.5431965,
+		"ratings":[
+			{
+				"stars":5,
+				"comment":"Great place to have lunch. Or dinner. Or both actually."
+			},
+			{
+				"stars":5,
+				"comment":"dude it was awesome! I'd seriously recommend it to anyone who likes pizza!"
+			}
+		]
+	},
+	{
+		"restaurantName":"Babalou",
+		"address":"4 Rue Lamarck, 75018 Paris",
+		"lat":48.8865035,
+		"long":2.3442197,
+		"ratings":[
+			{
+				"stars":5,
+				"comment":"Tiny pizzeria next to Sacre Coeur!"
+			},
+			{
+				"stars":3,
+				"comment":"Meh, it was fine."
+			}
+		]
+	}
 ]
