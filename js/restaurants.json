@@ -1,7 +1,7 @@
 [
 	{
 		"id" : 1,
-		"restaurantName":"Bronco",
+		"name":"Bronco",
 		"address":"39 Rue des Petites Écuries, 75010 Paris",
 		"lat":48.8737815,
 		"long":2.3501649,

@@ -1,22 +1,26 @@
-html, body{
+html{
 	width: 100%;
 	height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+	/* background-image: url("./img/Background-Graphics-For-Websites4.jpg"); */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
 p{
 	color:crimson;
 }
 
-.App {
-	text-align: center;
-	margin: auto;
-}
-
-body{
-	background-image: url(./img/Background-Graphics-For-Websites4.jpg)
-}
-
-.map{
+#map{
 	height: 440px;
 	width: 800px;
 	margin:auto;
@@ -33,19 +37,17 @@ body{
 	margin-bottom:15px;
 	font-size: 30px;
 	display: flex;
-	border-radius: 5px;
 	justify-content: center;
 	align-items: center;
 }
 
 .footer{
 	height: 90px;
+	margin-top:15px;
 	bottom:0;
-	position: absolute;
 	width: 100%;
 	background-color:#333;
 	color: whitesmoke;
-	border-radius: 5px;
 	font-size: 30px;
 	display: flex;
 	justify-content: center;
