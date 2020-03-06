@@ -10,21 +10,23 @@ function getMap(){
 		zoomOffset: -1,
 		accessToken: 'pk.eyJ1Ijoic29pbXVlbjExIiwiYSI6ImNrNzM0Y2RvcjA4YnMzaG1uaWVyZGxidjcifQ.Ed1yaeFJ8-4ntjFgWIjLAg'
 	}).addTo(mymap);
+	return mymap;
+}
 
+function customizeMap(mymap){
 	let marker = L.marker([51.5, -0.09]).addTo(mymap);
+	marker.bindPopup("<b>You are here!</b><br/> Are you lost ?").openPopup();
 	let circle = L.circle([51.508, -0.11], {
 		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5,
 		radius: 500
 	}).addTo(mymap);
-
 	let polygon = L.polygon([
 		[51.509, -0.08],
 		[51.503, -0.06],
 		[51.51, -0.047]
 	]).addTo(mymap);
-
 }
 
 function get_json_data(){
@@ -41,6 +43,7 @@ function get_json_data(){
 }
 
 window.onload = function(event){
-	const map = getMap()
+	const mymap = getMap()
+	customizeMap(mymap)
 	get_json_data()
 }
