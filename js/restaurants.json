@@ -18,7 +18,7 @@
 	},
 	{
 		"id" : 2,
-		"restaurantName":"Babalou",
+		"name":"Babalou",
 		"address":"4 Rue Lamarck, 75018 Paris",
 		"lat":48.8865035,
 		"long":2.3442197,
@@ -35,10 +35,10 @@
 	},
 	{
 		"id" : 3,
-		"restaurantName":"Yalami",
+		"name":"Yalami",
 		"address":"13 Rue Napoleon, 75038 Paris",
-		"lat":47.7757631,
-		"long":3.5431965,
+		"lat":48.7757702,
+		"long":2.5431913,
 		"ratings":[
 			{
 				"stars":5,
@@ -47,22 +47,6 @@
 			{
 				"stars":5,
 				"comment":"dude it was awesome! I'd seriously recommend it to anyone who likes pizza!"
-			}
-		]
-	},
-	{
-		"restaurantName":"Babalou",
-		"address":"4 Rue Lamarck, 75018 Paris",
-		"lat":48.8865035,
-		"long":2.3442197,
-		"ratings":[
-			{
-				"stars":5,
-				"comment":"Tiny pizzeria next to Sacre Coeur!"
-			},
-			{
-				"stars":3,
-				"comment":"Meh, it was fine."
 			}
 		]
 	}

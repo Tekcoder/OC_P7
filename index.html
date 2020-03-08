@@ -4,6 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#000000" />
+		<link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 							   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
 							   crossorigin=""/>
@@ -16,24 +17,26 @@
 		<title>OC P7</title>
 	</head>
 
-	<header class='header'>
-		<p>Project 7</p>
-		<p>Restaurant Review Site</p>
-	</header>
 
 	<body>
+		<header class='header'>
+			Project 7<br/>
+			Restaurant Review Site
+		</header>
 		<!-- Side navigation -->
-		<div class="sidenav">
-			<input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
-			<a href="#">Restaurants List</a>
+		<div class='flex-container'>
+			<div class="sidenav">
+				<input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+				<a href="#">Restaurants List</a>
+			</div>
+			<div id='map'></div>
 		</div>
-		<div id='map'></div>
 		<script type="text/javascript" src='./js/restaurants.json'></script>
 		<script src='./js/script.js'></script>
+		<footer class='footer'>
+			Iannetta Philippe
+		</footer>
 	</body>
 
-	<footer class='footer'>
-		<p>Iannetta Philippe</p>
-	</footer>
 
 </html>
