@@ -65,6 +65,10 @@ code {
 	color            : white;
 }
 
+.sidenav div {
+	color            : white;
+}
+
 .sidenav a           : hover{
 	color            : orange;
 }
