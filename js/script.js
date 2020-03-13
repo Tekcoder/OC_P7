@@ -18,19 +18,14 @@ function getMap(){
 }
 
 function customizeMap(mymap){
-	let marker = L.marker([51.5, -0.09]).addTo(mymap);
-	marker.bindPopup("<b>You are here!</b><br/> Are you lost ?").openPopup();
-	let circle = L.circle([51.508, -0.11], {
+	// let marker = L.marker([48.8737815, 2.3501649]).addTo(mymap);
+	// marker.bindPopup("<b>You are here!</b><br/> Are you lost ?").openPopup();
+	let circle = L.circle([48.8737815, 2.3501649], {
 		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5,
 		radius: 500
 	}).addTo(mymap);
-	let polygon = L.polygon([
-		[51.509, -0.08],
-		[51.503, -0.06],
-		[51.51, -0.047]
-	]).addTo(mymap);
 }
 
 function getJsonData(){
@@ -56,8 +51,17 @@ function listRestaurants(restaurantName, review){
 	newDiv.appendChild(reviewP);
 }
 
+//function updateList(){
+//		if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
+//			// -> show restaurant in the menu
+//			// else {
+//			//		do not show them
+//			// }
+//		}
+//}
+
+//getting user location
 function getUserLocation(mymap){
-	//getting user location
 	L.control.locate().addTo(mymap);
 }
 
@@ -94,21 +98,26 @@ function searchBox(mymap){
 
 window.onload = function(event){
 	const mymap = getMap()
+	customizeMap(mymap)
 	getUserLocation(mymap)
 	searchBox(mymap)
-	// customizeMap(mymap)
 	const data = getJsonData()
-	console.log(data)
+	for (let i in data){
+		console.log(data[i].name)
+		// listRestaurants(data[i].name)
+		for (let j = 0; j < data[i].ratings.length; j++){
+			console.log(data[i].ratings[j].stars)
+			listRestaurants(data[i].name, data[i].ratings[j].stars)
+		}
+	}
+
 	let markers = new Array();
 	let i = 0;
-	//r like restaurant
 	for (let r of data) {
+		//r like restaurant
 		markers[i] = L.marker([r.lat, r.long]).addTo(mymap);
+		console.log(markers[i])
 		markers[i].bindPopup(r.name)
-		console.log(mymap.getBounds().contains(markers[i].getLatLng()) == true)
 		i = i + 1;
-		listRestaurants(r.name, r.ratings[0].comment)
-		console.log(r.ratings)
-		console.log(r.ratings[0])
 	}
 }

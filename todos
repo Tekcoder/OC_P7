@@ -1,8 +1,8 @@
 STEP 1
 
-1. Get user's location with leaflet geoloc
-2. Put focus on user's location
-3. Specific color marker on that location
+1. Get user's location with leaflet geoloc [done]
+2. Put focus on user's location [done]
+3. Specific color marker on that location [done]
 4. If restaurants aren't visible, don't put them in the menu.
    else show them in the menu
 5. When you click on a restaurant, show its google street view photo
@@ -11,7 +11,7 @@ STEP 1
 STEP 2
 
 1. Add a review to existing restaurants
-2. Create a new restaurant when click on the map
+2. Create a new restaurant when clicking on the map
 [not necessary to keep the info after user leaves the page]
 
 STEP 3
