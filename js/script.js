@@ -1,6 +1,7 @@
 "use strict"
 
-// AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0 (google api key)
+// (google api key)
+// AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0 
 
 function getMap(){
 	let mymap = L.map('map').setView([48.8737815, 2.3501649], 10);
@@ -15,6 +16,34 @@ function getMap(){
 		accessToken : 'pk.eyJ1Ijoic29pbXVlbjExIiwiYSI6ImNrNzM0Y2RvcjA4YnMzaG1uaWVyZGxidjcifQ.Ed1yaeFJ8-4ntjFgWIjLAg'
 	}).addTo(mymap);
 	return mymap;
+}
+
+function getUserPosition(mymap){
+	let options = {
+		enableHighAccuracy: true,
+		timeout: 5000,
+		maximumAge: 0
+	};
+
+	function success(pos) {
+		let crd = pos.coords;
+
+		console.log('Your current position is:');
+		console.log(`Latitude : ${crd.latitude}`);
+		console.log(`Longitude: ${crd.longitude}`);
+		console.log(`More or less ${crd.accuracy} meters.`);
+	}
+
+	function error(err) {
+		console.warn(`ERROR(${err.code}): ${err.message}`);
+	}
+	navigator.geolocation.getCurrentPosition(success, error, options);
+	if ("geolocation" in navigator) {
+		/* geolocation is available */
+		console.log("yes")
+	} else {
+		console.log("no")
+	}
 }
 
 function customizeMap(mymap){
@@ -60,11 +89,6 @@ function listRestaurants(restaurantName, review){
 //		}
 //}
 
-//getting user location
-function getUserLocation(mymap){
-	L.control.locate().addTo(mymap);
-}
-
 function searchBox(mymap){
 	mymap.zoomControl.setPosition('topright');
 	mymap.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -99,12 +123,12 @@ function searchBox(mymap){
 window.onload = function(event){
 	const mymap = getMap()
 	customizeMap(mymap)
-	getUserLocation(mymap)
 	searchBox(mymap)
+	getUserPosition(mymap)
 	const data = getJsonData()
 	for (let i in data){
 		console.log(data[i].name)
-		// listRestaurants(data[i].name)
+		listRestaurants(data[i].name)
 		for (let j = 0; j < data[i].ratings.length; j++){
 			console.log(data[i].ratings[j].stars)
 			listRestaurants(data[i].name, data[i].ratings[j].stars)
