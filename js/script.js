@@ -106,19 +106,22 @@ function placeRestaurants(mymap, data){
 	for (let restaurant of data) {
 		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
 		markers[i].bindPopup(restaurant.name)
+		console.log(mymap.getBounds().contains(markers[i].getLatLng()) == true)
+		//if restaurant appears on map, display it on the menu
+		if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
+			buildMenu(data, i)
+		}
 		i = i + 1;
 	}
 }
 
-function buildMenu(data){
-	for (let i in data){
-		console.log(data[i].name)
-		listRestaurants(data[i].name)
-		for (let j = 0; j < data[i].ratings.length; j++){
-			console.log(data[i].ratings[j].stars)
-			listRestaurants(data[i].name, data[i].ratings[j].stars)
+function buildMenu(data, index){
+		console.log(data[index].name)
+		listRestaurants(data[index].name)
+		for (let j = 0; j < data[index].ratings.length; j++){
+			console.log("stars " + data[index].ratings[j].stars)
+			listRestaurants(data[index].name, "stars " + data[index].ratings[j].stars)
 		}
-	}
 }
 
 window.onload = function(event){
@@ -127,6 +130,4 @@ window.onload = function(event){
 	searchBox(mymap)
 	getUserPosition(mymap)
 	placeRestaurants(mymap, data)
-	buildMenu(data)
-	// mymap.getBounds().contains(markers[i].getLatLng()) == true
 }
