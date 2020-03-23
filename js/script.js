@@ -4,7 +4,7 @@
 // AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0 
 
 function getMap(){
-	let mymap = L.map('map').setView([48.8737815, 2.3501649], 10);
+	let mymap = L.map('map').setView([48.8737815, 2.3501649], 9);
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		attribution : 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,\
 					   <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,\
@@ -80,8 +80,8 @@ function searchBox(mymap){
 		sidebarTitleText: 'Header',
 		sidebarMenuItems: {
 			Items: [
-				{ type: "link", name: "Link 1 (github.com)", href: "http://github.com", icon: "icon-local-carwash" },
-				{ type: "link", name: "Link 2 (google.com)", href: "http://google.com", icon: "icon-cloudy" },
+				{ type: "link", name: "Restaurant 1"},
+				{ type: "link", name: "Restaurant 2"},
 				{ type: "button", name: "Button 1", onclick: "alert('button 1 clicked !')", icon: "icon-potrait" },
 				{ type: "button", name: "Button 2", onclick: "button2_click();", icon: "icon-local-dining" },
 				{ type: "link", name: "Link 3 (stackoverflow.com)", href: 'http://stackoverflow.com', icon: "icon-bike" },
@@ -106,7 +106,6 @@ function placeRestaurants(mymap, data){
 	for (let restaurant of data) {
 		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
 		markers[i].bindPopup(restaurant.name)
-		console.log(mymap.getBounds().contains(markers[i].getLatLng()) == true)
 		//if restaurant appears on map, display it on the menu
 		if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
 			buildMenu(data, i)
@@ -116,10 +115,8 @@ function placeRestaurants(mymap, data){
 }
 
 function buildMenu(data, index){
-		console.log(data[index].name)
 		listRestaurants(data[index].name)
 		for (let j = 0; j < data[index].ratings.length; j++){
-			console.log("stars " + data[index].ratings[j].stars)
 			listRestaurants(data[index].name, "stars " + data[index].ratings[j].stars)
 		}
 }
