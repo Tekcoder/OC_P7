@@ -19,6 +19,14 @@ function getMap(){
 }
 
 function getUserPosition(mymap){
+	const greenIcon = L.icon({
+		iconUrl: '../img/leaf-green.png',
+		iconSize:     [38, 95], // size of the icon
+		shadowSize:   [50, 64], // size of the shadow
+		iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		shadowAnchor: [4, 62],  // the same for the shadow
+		popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+	});
 	let options = {
 		enableHighAccuracy: true,
 		timeout: 5000,
@@ -30,6 +38,7 @@ function getUserPosition(mymap){
 		console.log(`Latitude : ${crd.latitude}`);
 		console.log(`Longitude: ${crd.longitude}`);
 		console.log(`More or less ${crd.accuracy} meters.`);
+		L.marker([48.5, 3], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
 	}
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
