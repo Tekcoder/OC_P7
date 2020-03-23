@@ -24,37 +24,17 @@ function getUserPosition(mymap){
 		timeout: 5000,
 		maximumAge: 0
 	};
-
 	function success(pos) {
 		let crd = pos.coords;
-
 		console.log('Your current position is:');
 		console.log(`Latitude : ${crd.latitude}`);
 		console.log(`Longitude: ${crd.longitude}`);
 		console.log(`More or less ${crd.accuracy} meters.`);
 	}
-
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	navigator.geolocation.getCurrentPosition(success, error, options);
-	if ("geolocation" in navigator) {
-		/* geolocation is available */
-		console.log("yes")
-	} else {
-		console.log("no")
-	}
-}
-
-function customizeMap(mymap){
-	// let marker = L.marker([48.8737815, 2.3501649]).addTo(mymap);
-	// marker.bindPopup("<b>You are here!</b><br/> Are you lost ?").openPopup();
-	let circle = L.circle([48.8737815, 2.3501649], {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5,
-		radius: 500
-	}).addTo(mymap);
 }
 
 function getJsonData(){
@@ -79,15 +59,6 @@ function listRestaurants(restaurantName, review){
 	menu.appendChild(newDiv);
 	newDiv.appendChild(reviewP);
 }
-
-//function updateList(){
-//		if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
-//			// -> show restaurant in the menu
-//			// else {
-//			//		do not show them
-//			// }
-//		}
-//}
 
 function searchBox(mymap){
 	mymap.zoomControl.setPosition('topright');
@@ -120,12 +91,17 @@ function searchBox(mymap){
 	}
 }
 
-window.onload = function(event){
-	const mymap = getMap()
-	customizeMap(mymap)
-	searchBox(mymap)
-	getUserPosition(mymap)
-	const data = getJsonData()
+function placeRestaurants(mymap, data){
+	let markers = new Array();
+	let i = 0;
+	for (let restaurant of data) {
+		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
+		markers[i].bindPopup(restaurant.name)
+		i = i + 1;
+	}
+}
+
+function buildMenu(data){
 	for (let i in data){
 		console.log(data[i].name)
 		listRestaurants(data[i].name)
@@ -134,14 +110,14 @@ window.onload = function(event){
 			listRestaurants(data[i].name, data[i].ratings[j].stars)
 		}
 	}
+}
 
-	let markers = new Array();
-	let i = 0;
-	for (let r of data) {
-		//r like restaurant
-		markers[i] = L.marker([r.lat, r.long]).addTo(mymap);
-		console.log(markers[i])
-		markers[i].bindPopup(r.name)
-		i = i + 1;
-	}
+window.onload = function(event){
+	const mymap = getMap()
+	const data = getJsonData()
+	searchBox(mymap)
+	getUserPosition(mymap)
+	placeRestaurants(mymap, data)
+	buildMenu(data)
+	// mymap.getBounds().contains(markers[i].getLatLng()) == true
 }
