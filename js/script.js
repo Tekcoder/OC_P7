@@ -19,13 +19,19 @@ function getMap(){
 }
 
 function getUserPosition(mymap){
+	let position = new Array()
 	const greenIcon = L.icon({
 		iconUrl: '../img/leaf-green.png',
-		iconSize:     [38, 95], // size of the icon
-		shadowSize:   [50, 64], // size of the shadow
-		iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		shadowAnchor: [4, 62],  // the same for the shadow
-		popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		// size of the icon
+		iconSize:     [38, 95], 
+		// size of the shadow
+		shadowSize:   [50, 64],
+		// point of the icon which will correspond to marker's location
+		iconAnchor:   [22, 94], 
+		// the same for the shadow
+		shadowAnchor: [4, 62],  
+		// point from which the popup should open relative to the iconAnchor
+		popupAnchor:  [-3, -76] 
 	});
 	let options = {
 		enableHighAccuracy: true,
@@ -36,14 +42,21 @@ function getUserPosition(mymap){
 		let crd = pos.coords;
 		console.log('Your current position is:');
 		console.log(`Latitude : ${crd.latitude}`);
+		position.push(crd.latitude)
 		console.log(`Longitude: ${crd.longitude}`);
+		position.push(crd.longitude)
+		console.log({position})
+		console.log(position[0])
 		console.log(`More or less ${crd.accuracy} meters.`);
 		L.marker([48.5, 3], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
+		// return position
 	}
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	navigator.geolocation.getCurrentPosition(success, error, options);
+	console.log({position})
+	return position
 }
 
 function getJsonData(){
@@ -123,8 +136,11 @@ function buildMenu(data, index){
 
 window.onload = function(event){
 	const mymap = getMap()
+	// console.log(mymap)
 	const data = getJsonData()
 	searchBox(mymap)
-	getUserPosition(mymap)
+	let position = getUserPosition(mymap)
+	console.log({position})
+	console.table([position])
 	placeRestaurants(mymap, data)
 }
