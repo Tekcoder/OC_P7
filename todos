@@ -4,7 +4,10 @@ STEP 1
 2. Specific color marker on that location  [done]
 3. Put focus on user's location 
 4. If restaurants aren't visible, don't put them in the menu.
-   else show them in the menu
+   else show them in the menu 
+   => use setInterval (if true, else false)
+   => re-organize menu : no need to have a menu on the right of the webage;
+   use the one on the left of the map.
 5. When you click on a restaurant, show its google street view photo
 6. Show its number of stars and reviews
 
