@@ -53,22 +53,3 @@ code {
 	color            : crimson;
 	font-size        : 30px;
 }
-
-.sidenav {
-	order            : 2;
-	height           : 90%;
-	width            : calc(20% - 20px);
-	margin-left      : 20px;
-}
-
-.sidenav a {
-	color            : white;
-}
-
-.sidenav div {
-	color            : white;
-}
-
-.sidenav a           : hover{
-	color            : orange;
-}

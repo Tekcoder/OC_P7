@@ -4,7 +4,8 @@
 // AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0 
 
 function getMap(){
-	let mymap = L.map('map').setView([48.8737815, 2.3501649], 9);
+	// let mymap = L.map('map').setView([48.8737815, 2.3501649], 9);
+	let mymap = L.map('map')
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 		attribution : 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,\
 					   <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,\
@@ -48,14 +49,21 @@ function getUserPosition(mymap){
 		console.log({position})
 		console.log(position[0])
 		console.log(`More or less ${crd.accuracy} meters.`);
-		L.marker([48.5, 3], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
-		// return position
+		mymap.setView([position[0], position[1]], 9);
+		L.control.scale().addTo(mymap);
+		setInterval(function(){
+			mymap.setView([position[0], position[1]]);
+			setTimeout(function(){
+				mymap.setView([position[0], position[1]]);
+			}, 2000);
+		}, 4000);
+		L.marker([position[0], position[1]], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
 	}
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	navigator.geolocation.getCurrentPosition(success, error, options);
-	console.log({position})
+	// console.log({position})
 	return position
 }
 
@@ -70,16 +78,6 @@ function getJsonData(){
 	xhttp.open("GET", "./js/restaurants.json", false);
 	xhttp.send();
 	return data
-}
-
-function listRestaurants(restaurantName, review){
-	let menu = document.getElementsByClassName("sidenav")[0];
-	let newDiv = document.createElement('div')
-	let reviewP = document.createElement('p')
-	newDiv.innerHTML = restaurantName;
-	reviewP.innerHTML = review;
-	menu.appendChild(newDiv);
-	newDiv.appendChild(reviewP);
 }
 
 function searchBox(mymap){
@@ -119,28 +117,27 @@ function placeRestaurants(mymap, data){
 	for (let restaurant of data) {
 		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
 		markers[i].bindPopup(restaurant.name)
+		// console.log(restaurant)
 		//if restaurant appears on map, display it on the menu
-		if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
-			buildMenu(data, i)
-		}
+		// if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
+			// buildMenu(data, i)
+		// }
 		i = i + 1;
 	}
 }
 
 function buildMenu(data, index){
 		listRestaurants(data[index].name)
-		for (let j = 0; j < data[index].ratings.length; j++){
-			listRestaurants(data[index].name, "stars " + data[index].ratings[j].stars)
-		}
+		// for (let j = 0; j < data[index].ratings.length; j++){
+		// 	listRestaurants(data[index].name, "stars " + data[index].ratings[j].stars)
+		// }
 }
 
 window.onload = function(event){
 	const mymap = getMap()
-	// console.log(mymap)
+	getUserPosition(mymap)
 	const data = getJsonData()
+	console.log(data)
 	searchBox(mymap)
-	let position = getUserPosition(mymap)
-	console.log({position})
-	console.table([position])
 	placeRestaurants(mymap, data)
 }

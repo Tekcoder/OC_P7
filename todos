@@ -2,7 +2,7 @@ STEP 1
 
 1. Get user's location with leaflet geoloc [done]
 2. Specific color marker on that location  [done]
-3. Put focus on user's location 
+3. Put focus on user's location [done]
 4. If restaurants aren't visible, don't put them in the menu.
    else show them in the menu 
    => use setInterval (if true, else false)
@@ -13,12 +13,12 @@ STEP 1
 
 STEP 2
 
-1. Add a review to existing restaurants / create a form, essentially
-2. Create a new restaurant when clicking on the map
+7. Add a review to existing restaurants / create a form, essentially
+8. Create a new restaurant when clicking on the map
 [not necessary to keep the info after user leaves the page]
 
 STEP 3
 
-Find an API to retrieve restaurants and reviews! 
+9. Find an API to retrieve restaurants and reviews! 
 Use it to display additional restaurants and reviews 
 on your map so you don't have to use only your JSON file. 

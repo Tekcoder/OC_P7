@@ -49,5 +49,39 @@
 				"comment":"dude it was awesome! I'd seriously recommend it to anyone who likes pizza!"
 			}
 		]
+	},
+	{
+		"id" : 4,
+		"name":"French brasserie",
+		"address":"15 Rue de la Poste, Ici",
+		"lat":45.5157703,
+		"long":5.6431913,
+		"ratings":[
+			{
+				"stars":2,
+				"comment":"This place sucked... Never go there!"
+			}
+		]
+	},
+	{
+		"id" : 5,
+		"name":"English  Café",
+		"address":"16 avenue d'ailleurs, Là-bas-ville",
+		"lat":45.2758012,
+		"long":5.5431587,
+		"ratings":[
+			{
+				"stars":6,
+				"comment":"I know it shouldn't be possible to rate a restaurant more than 5, but it rocked my world big time!"
+			},
+			{
+				"stars":4,
+				"comment":"Not bad at all"
+			},
+			{
+				"stars":1,
+				"comment":"Meh..."
+			}
+		]
 	}
 ]
