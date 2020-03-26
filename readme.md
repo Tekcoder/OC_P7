@@ -1,6 +1,6 @@
 # Project 7 ©Iannetta Philippe 
 
-![Alt text](./site-screenshot.png "Screenshot 1")
+![Alt text](./site-screenshot-2.png "Screenshot 1")
 
 ## STEP 1: RESTAURANTS
 

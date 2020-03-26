@@ -63,7 +63,6 @@ function getUserPosition(mymap){
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	navigator.geolocation.getCurrentPosition(success, error, options);
-	// console.log({position})
 	return position
 }
 
