@@ -10,11 +10,7 @@
 
 	3. Put focus on user's location [done]
 
-	4. If restaurants aren't visible, don't put them in the menu.
-   else show them in the menu 
-   	* Use setInterval (if true, else false)
-   	* Re-organize menu : no need to have a menu on the right of the webage;
-   use the one on the left of the map.
+	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu
 
 	5. When you click on a restaurant, show its google street view photo
 
@@ -24,8 +20,7 @@
 
 	7. Add a review to existing restaurants / create a form, essentially
 
-	8. Create a new restaurant when clicking on the map
-[not necessary to keep the info after user leaves the page]
+	8. Create a new restaurant when clicking on the map [not necessary to keep the info after user leaves the page]
 
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
@@ -43,8 +38,8 @@ on your map so you don't have to use only your JSON file.
 
 	3. Run npm install http-server
 
-	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser.
-That's it, your done. 
+	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar.
+That's it, you're done. 
 
 	5. Enjoy !
 
@@ -52,6 +47,6 @@ That's it, your done.
 
 	Come on, let's be serious for a second. Install Linux.
 
-* ON MAC :
+* ON MAC OS :
 
-	No different than Linux.
+	Refer to section about windows.	
