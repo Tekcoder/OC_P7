@@ -2,6 +2,8 @@
 
 ![Alt text](./site-screenshot-2.png "Screenshot 1")
 
+-> FIRST I'LL DO STEP 1, THEN STEP 2 AND FINALLY STEP 3 !
+
 ## STEP 1: RESTAURANTS
 
 	1. Get user's location with leaflet geoloc [done]
@@ -14,7 +16,7 @@
 
 	5. When you click on a restaurant, show its google street view photo
 
-	6. Show its number of stars and reviews
+	6. Filter tool display restaurant b/w X and Y stars.
 
 ## STEP 2: ADD RESTAURANTS AND REVIEWS
 
@@ -24,9 +26,7 @@
 
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
-	9. Find an API to retrieve restaurants and reviews! 
-Use it to display additional restaurants and reviews 
-on your map so you don't have to use only your JSON file. 
+	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. 
 
 ## HOW TO RUN MY APP :
 

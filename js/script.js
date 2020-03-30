@@ -19,7 +19,7 @@ function getMap(){
 	return mymap;
 }
 
-function getUserPosition(mymap){
+function getUserPosition(data, mymap){
 	let position = new Array()
 	const greenIcon = L.icon({
 		iconUrl: '../img/leaf-green.png',
@@ -46,15 +46,16 @@ function getUserPosition(mymap){
 		position.push(crd.latitude)
 		console.log(`Longitude: ${crd.longitude}`);
 		position.push(crd.longitude)
-		console.log({position})
-		console.log(position[0])
 		console.log(`More or less ${crd.accuracy} meters.`);
 		mymap.setView([position[0], position[1]], 9);
 		L.control.scale().addTo(mymap);
 		setInterval(function(){
+			//the map is centered around the user's position
 			mymap.setView([position[0], position[1]]);
 			setTimeout(function(){
 				mymap.setView([position[0], position[1]]);
+				placeRestaurants(mymap, data)
+				//re-centered every 2 sec
 			}, 2000);
 		}, 4000);
 		L.marker([position[0], position[1]], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
@@ -79,35 +80,7 @@ function getJsonData(){
 	return data
 }
 
-function searchBox(mymap){
-	mymap.zoomControl.setPosition('topright');
-	mymap.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-		{attribution:'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'}
-	));
-
-	var searchboxControl = createSearchboxControl();
-	var control = new searchboxControl({
-		sidebarTitleText: 'Header',
-		sidebarMenuItems: {
-			Items: [
-				{ type: "link", name: "Restaurant 1"},
-				{ type: "link", name: "Restaurant 2"},
-				{ type: "button", name: "Button 1", onclick: "alert('button 1 clicked !')", icon: "icon-potrait" },
-				{ type: "button", name: "Button 2", onclick: "button2_click();", icon: "icon-local-dining" },
-				{ type: "link", name: "Link 3 (stackoverflow.com)", href: 'http://stackoverflow.com', icon: "icon-bike" },
-			]
-		}
-	});
-	control._searchfunctionCallBack = function (searchkeywords){
-		if (!searchkeywords) {
-			searchkeywords = "The search call back is clicked !!"
-		}
-		alert(searchkeywords)
-	}
-	mymap.addControl(control);
-	function button2_click(){
-		alert('button 2 clicked !!!');
-	}
+function searchBox(){
 }
 
 function placeRestaurants(mymap, data){
@@ -117,26 +90,55 @@ function placeRestaurants(mymap, data){
 		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
 		markers[i].bindPopup(restaurant.name)
 		// console.log(restaurant)
-		//if restaurant appears on map, display it on the menu
-		// if (mymap.getBounds().contains(markers[i].getLatLng()) == true){
-			// buildMenu(data, i)
-		// }
+		// if restaurant appears on map, display it on the menu
+		if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
+			buildMenu(data, i)
+		}
 		i = i + 1;
 	}
 }
 
-function buildMenu(data, index){
-		listRestaurants(data[index].name)
-		// for (let j = 0; j < data[index].ratings.length; j++){
-		// 	listRestaurants(data[index].name, "stars " + data[index].ratings[j].stars)
-		// }
+function listRestaurants(menu, newDiv, reviewP, restaurantName, review){
+	// console.log('here')
+	newDiv.innerHTML = restaurantName;
+	reviewP.innerHTML = review;
+	menu.appendChild(newDiv);
+	newDiv.appendChild(reviewP);
+	// console.log('now I am working')
 }
 
+// I should call this function within setInterval in getUserPosition
+function buildMenu(data, index){
+	// console.log("here1")
+	let menu = document.getElementsByClassName("sidenav")[0];
+	let newDiv = document.createElement('div')
+	let reviewP = document.createElement('p')
+	// console.log("here2")
+	// listRestaurants(data[index].name)
+	for (let j = 0; j < data[index].ratings.length; j++){
+		listRestaurants(menu, newDiv, reviewP, data[index].name, "stars " + data[index].ratings[j].stars)
+		// if (menu !== undefined){
+		// 	removeMenuItems(menu, newDiv, reviewP)
+		// }
+	}
+}
+
+function getStreetView(){
+	let panorama;
+	panorama = new google.maps.StreetViewPanorama(
+		document.getElementById('street-view'),
+		{
+			position: {lat: 37.869260, lng: -122.254811},
+			pov: {heading: 165, pitch: 0},
+			zoom: 1
+		});
+}
+
+
 window.onload = function(event){
-	const mymap = getMap()
-	getUserPosition(mymap)
 	const data = getJsonData()
-	console.log(data)
-	searchBox(mymap)
-	placeRestaurants(mymap, data)
+	const mymap = getMap()
+	getUserPosition(data, mymap)
+	getStreetView()
+	// searchBox(mymap)
 }

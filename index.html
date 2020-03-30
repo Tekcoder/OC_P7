@@ -16,10 +16,6 @@
 				integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 				crossorigin="">
 		</script>
-		<!-- SEARCH BOX PLUGIN -->
-		<script src="./leaflet-plugins/leaflet-custom-searchbox/dist/leaflet.customsearchbox.min.js"></script>
-		<link href="./leaflet-plugins/leaflet-custom-searchbox/dist/searchbox.min.css" rel="stylesheet" />
-		<!-- END SEARCH BOX PLUGIN -->
 		<title>OC P7</title>
 	</head>
 
@@ -28,20 +24,25 @@
 			Project 7<br/>
 			Restaurant Review Site
 		</header>
+			<form>
+				<label for="fname" placeholder='search...'></label>
+				<input type="text" id="fname" name="fname">
+				<input type="submit" value="Submit">
+			</form>
 		<div class='flex-container'>
-			<!-- <div class="sidenav"> -->
-			<!-- 	<a href="#">Restaurants List:</a> -->
-			<!-- </div> -->
+			<div class="sidenav">
+				<a href="#">Restaurants List:</a>
+			</div>
 			<div id='map'></div>
+			<div id="street-view"></div>
 		</div>
 		<footer class='footer'>
 			Iannetta Philippe
 		</footer>
-		<!-- <script --> 
-		<!-- 		src="https://www.google.com/maps/embed/v1/streetview?key=AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0&parameters"> -->
-		<!-- </script> -->
-		<script type="text/javascript" src='./js/restaurants.json'></script>
 		<script src='https://code.jquery.com/jquery-3.4.1.js'></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0&libraries=places"></script>
+		<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+		<script type="text/javascript" src='./js/restaurants.json'></script>
 		<script src='./js/script.js'></script>
 	</body>
 
