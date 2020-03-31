@@ -64,8 +64,9 @@ code {
 	overflow: scroll;
 }
 
-.sidenav a {
-	color:            white;
+#sidenav-title{
+	background-color: #333333;
+	color: silver;
 }
 
 .sidenav div {
