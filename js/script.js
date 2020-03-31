@@ -99,33 +99,26 @@ function placeRestaurants(mymap, data){
 }
 
 function listRestaurants(menu, newDiv, reviewP, restaurantName, review){
-	// console.log('here')
 	newDiv.innerHTML = restaurantName;
 	reviewP.innerHTML = review;
 	menu.appendChild(newDiv);
 	newDiv.appendChild(reviewP);
-	// console.log('now I am working')
 }
 
 // I should call this function within setInterval in getUserPosition
 function buildMenu(data, index){
-	// console.log("here1")
 	let menu = document.getElementsByClassName("sidenav")[0];
 	let newDiv = document.createElement('div')
 	let reviewP = document.createElement('p')
-	// console.log("here2")
-	// listRestaurants(data[index].name)
 	for (let j = 0; j < data[index].ratings.length; j++){
 		listRestaurants(menu, newDiv, reviewP, data[index].name, "stars " + data[index].ratings[j].stars)
-		// if (menu !== undefined){
-		// 	removeMenuItems(menu, newDiv, reviewP)
-		// }
+		$('.sidenav').remove()
 	}
 }
 
 function getStreetView(){
 	let panorama;
-	panorama = new google.maps.StreetViewPanorama(
+	panorama = new google.maps.StreetViewService(
 		document.getElementById('street-view'),
 		{
 			position: {lat: 37.869260, lng: -122.254811},
@@ -139,6 +132,6 @@ window.onload = function(event){
 	const data = getJsonData()
 	const mymap = getMap()
 	getUserPosition(data, mymap)
-	getStreetView()
+	// getStreetView()
 	// searchBox(mymap)
 }

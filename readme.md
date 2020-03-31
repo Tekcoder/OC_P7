@@ -12,7 +12,7 @@
 
 	3. Put focus on user's location [done]
 
-	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu
+	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [done]
 
 	5. When you click on a restaurant, show its google street view photo
 
