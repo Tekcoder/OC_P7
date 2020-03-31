@@ -41,21 +41,20 @@ function getUserPosition(data, mymap){
 	};
 	function success(pos) {
 		let crd = pos.coords;
-		console.log('Your current position is:');
 		console.log(`Latitude : ${crd.latitude}`);
-		position.push(crd.latitude)
 		console.log(`Longitude: ${crd.longitude}`);
-		position.push(crd.longitude)
 		console.log(`More or less ${crd.accuracy} meters.`);
+		position.push(crd.latitude)
+		position.push(crd.longitude)
 		mymap.setView([position[0], position[1]], 9);
 		L.control.scale().addTo(mymap);
 		setInterval(function(){
 			//the map is centered around the user's position
+			//re-centered every 2 sec
 			mymap.setView([position[0], position[1]]);
+			buildMenu(mymap, data)
 			setTimeout(function(){
 				mymap.setView([position[0], position[1]]);
-				placeRestaurants(mymap, data)
-				//re-centered every 2 sec
 			}, 2000);
 		}, 4000);
 		L.marker([position[0], position[1]], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
@@ -64,7 +63,6 @@ function getUserPosition(data, mymap){
 		console.warn(`ERROR(${err.code}): ${err.message}`);
 	}
 	navigator.geolocation.getCurrentPosition(success, error, options);
-	return position
 }
 
 function getJsonData(){
@@ -80,39 +78,31 @@ function getJsonData(){
 	return data
 }
 
-function searchBox(){
-}
-
-function placeRestaurants(mymap, data){
-	let markers = new Array();
-	let i = 0;
-	for (let restaurant of data) {
-		markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
-		markers[i].bindPopup(restaurant.name)
-		// console.log(restaurant)
-		// if restaurant appears on map, display it on the menu
-		if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
-			buildMenu(data, i)
-		}
-		i = i + 1;
-	}
-}
-
-function listRestaurants(menu, newDiv, reviewP, restaurantName, review){
-	newDiv.innerHTML = restaurantName;
-	reviewP.innerHTML = review;
-	menu.appendChild(newDiv);
-	newDiv.appendChild(reviewP);
-}
 
 // I should call this function within setInterval in getUserPosition
-function buildMenu(data, index){
+function buildMenu(mymap, data){
 	let menu = document.getElementsByClassName("sidenav")[0];
 	let newDiv = document.createElement('div')
 	let reviewP = document.createElement('p')
-	for (let j = 0; j < data[index].ratings.length; j++){
-		listRestaurants(menu, newDiv, reviewP, data[index].name, "stars " + data[index].ratings[j].stars)
-		$('.sidenav').remove()
+	placeRestaurants(data, mymap)
+	menu.appendChild(newDiv);
+	newDiv.appendChild(reviewP);
+
+	function placeRestaurants(data, mymap){
+		let markers = new Array();
+		let i = 0;
+		for (let restaurant of data) {
+			markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
+			markers[i].bindPopup(restaurant.name)
+			newDiv.innerHTML = restaurant.name;
+			if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
+				for (let j = 0; j < data[i].ratings.length; j++){
+					reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
+				}
+				console.log('hello ' + i)
+				i = i + 1;
+			}
+		}
 	}
 }
 
@@ -133,5 +123,4 @@ window.onload = function(event){
 	const mymap = getMap()
 	getUserPosition(data, mymap)
 	// getStreetView()
-	// searchBox(mymap)
 }
