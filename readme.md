@@ -12,11 +12,11 @@
 
 	3. Put focus on user's location [done]
 
-	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [done]
+	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [almost done]
 
 	5. When you click on a restaurant, show its google street view photo
 
-	6. Filter tool display restaurant b/w X and Y stars.
+	6. Filter tool display restaurant b/w X and Y stars. [almost done]
 
 ## STEP 2: ADD RESTAURANTS AND REVIEWS
 

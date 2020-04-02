@@ -48,10 +48,12 @@ function getUserPosition(data, mymap){
 		position.push(crd.longitude)
 		mymap.setView([position[0], position[1]], 9);
 		L.control.scale().addTo(mymap);
+		let menu = buildMenu(mymap, data)
 		setInterval(function(){
 			//the map is centered around the user's position
 			//re-centered every 2 sec
 			mymap.setView([position[0], position[1]]);
+			removeMenu(menu)
 			buildMenu(mymap, data)
 			setTimeout(function(){
 				mymap.setView([position[0], position[1]]);
@@ -78,8 +80,20 @@ function getJsonData(){
 	return data
 }
 
+//function doesn't work yet
+function getFilterValue(){
+	let element = document.getElementById('elementid')
+	let value = element.options[element.selectedIndex].value
+	let text = element.options[element.selectedIndex].text
+	return value
+}
 
-// I should call this function within setInterval in getUserPosition
+//function doesn't work yet
+function filterTool(value){
+	
+}
+
+// called in setInterval in getUserPosition()
 function buildMenu(mymap, data){
 	let menu = document.getElementsByClassName("sidenav")[0];
 	let newDiv = document.createElement('div')
@@ -104,6 +118,12 @@ function buildMenu(mymap, data){
 			}
 		}
 	}
+	return menu
+}
+
+// called in setInterval in getUserPosition()
+function removeMenu(menu){
+	menu.removeChild(newDiv)
 }
 
 function getStreetView(){
@@ -116,7 +136,6 @@ function getStreetView(){
 			zoom: 1
 		});
 }
-
 
 window.onload = function(event){
 	const data = getJsonData()

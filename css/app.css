@@ -77,9 +77,8 @@ code {
 	color:            orange;
 }
 
-form{
-	margin-top:       5px;
-	margin-bottom:    5px;
+#filter{
+	color: white;
 }
 
 #street-view {
