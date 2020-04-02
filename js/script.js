@@ -1,7 +1,5 @@
 "use strict"
 
-// (google api key)
-// AIzaSyDTe4m2xCSxBAGbh1EOcrzpjBC5_eiY-L0 
 
 function getMap(){
 	// let mymap = L.map('map').setView([48.8737815, 2.3501649], 9);
@@ -123,7 +121,7 @@ function buildMenu(mymap, data){
 
 // called in setInterval in getUserPosition()
 function removeMenu(menu){
-	menu.removeChild(newDiv)
+	document.body.removeChild(menu)
 }
 
 function getStreetView(){
