@@ -1,37 +1,15 @@
 "use strict"
 
-
-function getMap(){
-	// let mymap = L.map('map').setView([48.8737815, 2.3501649], 9);
-	let mymap = L.map('map')
-	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-		attribution : 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors,\
-					   <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,\
-					   Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		maxZoom     : 18,
-		id          : 'mapbox/streets-v11',
-		tileSize    : 512,
-		zoomOffset  : -1,
-		accessToken : 'pk.eyJ1Ijoic29pbXVlbjExIiwiYSI6ImNrNzM0Y2RvcjA4YnMzaG1uaWVyZGxidjcifQ.Ed1yaeFJ8-4ntjFgWIjLAg'
-	}).addTo(mymap);
+function initMap() {
+	let mymap = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: -34.397, lng: 150.644},
+		zoom: 8
+	});
 	return mymap;
 }
 
 function getUserPosition(data, mymap){
 	let position = new Array()
-	const greenIcon = L.icon({
-		iconUrl: '../img/leaf-green.png',
-		// size of the icon
-		iconSize:     [38, 95], 
-		// size of the shadow
-		shadowSize:   [50, 64],
-		// point of the icon which will correspond to marker's location
-		iconAnchor:   [22, 94], 
-		// the same for the shadow
-		shadowAnchor: [4, 62],  
-		// point from which the popup should open relative to the iconAnchor
-		popupAnchor:  [-3, -76] 
-	});
 	let options = {
 		enableHighAccuracy: true,
 		timeout: 5000,
@@ -44,20 +22,25 @@ function getUserPosition(data, mymap){
 		console.log(`More or less ${crd.accuracy} meters.`);
 		position.push(crd.latitude)
 		position.push(crd.longitude)
-		mymap.setView([position[0], position[1]], 9);
-		L.control.scale().addTo(mymap);
-		buildMenu(mymap, data)
+		// mymap.setView([position[0], position[1]], 9);
+		// L.control.scale().addTo(mymap);
+		// buildMenu(mymap, data)
 		// console.log(menu)
 		setInterval(function(){
 			// reset center of map when it changes
 			// mymap.setView([position[0], position[1]]);
-			removeMenu()
-			buildMenu(mymap, data)
+			// removeMenu()
+			// buildMenu(mymap, data)
 			setTimeout(function(){
-				mymap.setView([position[0], position[1]]);
+				// mymap.setView([position[0], position[1]]);
 			}, 2000);
 		}, 4000);
-		L.marker([position[0], position[1]], {icon: greenIcon}).addTo(mymap).bindPopup('This is the user\'s position');
+		var myLatLng = {lat: position[0], lng: position[1]};
+		let marker = new google.maps.Marker({
+          position: myLatLng,
+          map: mymap,
+          title: 'This is my position'
+        });
 	}
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -139,8 +122,8 @@ function getStreetView(){
 }
 
 window.onload = function(event){
+	const mymap = initMap()
 	const data = getJsonData()
-	const mymap = getMap()
 	getUserPosition(data, mymap)
 	// getStreetView()
 }
