@@ -6,11 +6,11 @@
 
 ## STEP 1: RESTAURANTS
 
-	1. Get user's location with leaflet geoloc [done]
+	1. Get user's location [done]
 
-	2. Specific color marker on that location  [done]
+	2. Put focus on user's location [done]
 
-	3. Put focus on user's location [done]
+	3. Specific color marker on that location
 
 	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [almost done]
 

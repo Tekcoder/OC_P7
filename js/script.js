@@ -1,11 +1,24 @@
 "use strict"
 
 function initMap() {
-	let mymap = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: -34.397, lng: 150.644},
-		zoom: 8
+	let mymap = new google.maps.Map(document.getElementById('map'));
+	navigator.geolocation.getCurrentPosition(function(position) {
+		// Center on user's current location if geolocation prompt allowed
+		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		mymap.setCenter(initialLocation);
+		mymap.setZoom(13);
+		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
+		let marker = new google.maps.Marker({
+          position: myLatLng,
+          map: mymap,
+          title: 'This is my position'
+        });
+	}, function(positionError) {
+		// User denied geolocation prompt - default to Chicago
+		mymap.setCenter(new google.maps.LatLng(39.8097343, -98.5556199));
+		mymap.setZoom(5);
 	});
-	return mymap;
+	return mymap
 }
 
 function getUserPosition(data, mymap){
@@ -35,12 +48,6 @@ function getUserPosition(data, mymap){
 				// mymap.setView([position[0], position[1]]);
 			}, 2000);
 		}, 4000);
-		var myLatLng = {lat: position[0], lng: position[1]};
-		let marker = new google.maps.Marker({
-          position: myLatLng,
-          map: mymap,
-          title: 'This is my position'
-        });
 	}
 	function error(err) {
 		console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -124,6 +131,5 @@ function getStreetView(){
 window.onload = function(event){
 	const mymap = initMap()
 	const data = getJsonData()
-	getUserPosition(data, mymap)
 	// getStreetView()
 }
