@@ -46,12 +46,12 @@ function getUserPosition(data, mymap){
 		position.push(crd.longitude)
 		mymap.setView([position[0], position[1]], 9);
 		L.control.scale().addTo(mymap);
-		let menu = buildMenu(mymap, data)
+		buildMenu(mymap, data)
+		// console.log(menu)
 		setInterval(function(){
-			//the map is centered around the user's position
-			//re-centered every 2 sec
-			mymap.setView([position[0], position[1]]);
-			removeMenu(menu)
+			// reset center of map when it changes
+			// mymap.setView([position[0], position[1]]);
+			removeMenu()
 			buildMenu(mymap, data)
 			setTimeout(function(){
 				mymap.setView([position[0], position[1]]);
@@ -88,7 +88,8 @@ function getFilterValue(){
 
 //function doesn't work yet
 function filterTool(value){
-	
+	//empty	
+	//empty	
 }
 
 // called in setInterval in getUserPosition()
@@ -116,12 +117,14 @@ function buildMenu(mymap, data){
 			}
 		}
 	}
-	return menu
 }
 
 // called in setInterval in getUserPosition()
-function removeMenu(menu){
-	document.body.removeChild(menu)
+function removeMenu(){
+	let menu = document.getElementsByClassName('sidenav')
+	console.log(menu)
+	document.body.menu.removeChild('p')
+	console.log('ok')
 }
 
 function getStreetView(){

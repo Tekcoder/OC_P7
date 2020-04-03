@@ -14,15 +14,17 @@
 
 	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [almost done]
 
-	5. When you click on a restaurant, show its google street view photo
+	5. When you click on a restaurant, show its google street view photo [Issues with integration of API]
 
 	6. Filter tool display restaurant b/w X and Y stars. [almost done]
 
 ## STEP 2: ADD RESTAURANTS AND REVIEWS
 
-	7. Add a review to existing restaurants / create a form, essentially
+	7. Add a review to existing restaurants (onclick event) / create a form, essentially
 
-	8. Create a new restaurant when clicking on the map [not necessary to keep the info after user leaves the page]
+	8. Create a new restaurant when clicking on the map 
+	
+	[not necessary to keep the info after user leaves the page]
 
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
