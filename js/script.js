@@ -6,54 +6,43 @@ function initMap() {
 		// Center on user's current location if geolocation prompt allowed
 		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		mymap.setCenter(initialLocation);
-		mymap.setZoom(13);
+		mymap.setZoom(12);
 		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
+		console.log(`Latitude : ${position.coords.latitude}`);
+		console.log(`Longitude: ${position.coords.longitude}`);
+		console.log(`More or less ${position.coords.accuracy} meters.`);
 		let marker = new google.maps.Marker({
-          position: myLatLng,
-          map: mymap,
-          title: 'This is my position'
-        });
+			position: myLatLng,
+			map: mymap,
+			title: 'This is my position'
+		});
+		setRadius(mymap, position.coords.latitude, position.coords.longitude)
 	}, function(positionError) {
-		// User denied geolocation prompt - default to Chicago
-		mymap.setCenter(new google.maps.LatLng(39.8097343, -98.5556199));
+		// User denied geolocation prompt 
+		mymap.setCenter(new google.maps.LatLng(45.2493312, 5.822873599999999));
 		mymap.setZoom(5);
 	});
+
 	return mymap
 }
 
-function getUserPosition(data, mymap){
-	let position = new Array()
-	let options = {
-		enableHighAccuracy: true,
-		timeout: 5000,
-		maximumAge: 0
-	};
-	function success(pos) {
-		let crd = pos.coords;
-		console.log(`Latitude : ${crd.latitude}`);
-		console.log(`Longitude: ${crd.longitude}`);
-		console.log(`More or less ${crd.accuracy} meters.`);
-		position.push(crd.latitude)
-		position.push(crd.longitude)
-		// mymap.setView([position[0], position[1]], 9);
-		// L.control.scale().addTo(mymap);
-		// buildMenu(mymap, data)
-		// console.log(menu)
-		setInterval(function(){
-			// reset center of map when it changes
-			// mymap.setView([position[0], position[1]]);
-			// removeMenu()
-			// buildMenu(mymap, data)
-			setTimeout(function(){
-				// mymap.setView([position[0], position[1]]);
-			}, 2000);
-		}, 4000);
-	}
-	function error(err) {
-		console.warn(`ERROR(${err.code}): ${err.message}`);
-	}
-	navigator.geolocation.getCurrentPosition(success, error, options);
+function setRadius(mymap, latitude, longitude){
+	let circle = new google.maps.Circle({
+		map: mymap,
+		center: new google.maps.LatLng(latitude, longitude),
+		radius: 5000
+	})
 }
+
+// setInterval(function(){
+// reset center of map when it changes
+// mymap.setView([position[0], position[1]]);
+// removeMenu()
+// buildMenu(mymap, data)
+// setTimeout(function(){
+// mymap.setView([position[0], position[1]]);
+// }, 2000);
+// }, 4000);
 
 function getJsonData(){
 	let data = null;

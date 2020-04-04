@@ -6,15 +6,17 @@
 
 STEP 1 (FOCUS OF TODAY'S SESSION)
 
-Markers are duplicating on the map
-Menu items are duplicating in the menu
-Enable billing on my google account
+3. Add the markers for the restaurants to the map based on the user position based on the range you give it eg 2 km or whatever you choose
+
+4. Have the functions run to refresh everything if you change the view of the map so you clear out the markers and sidebar list and add the new view contents to both
+
+5. Once all of this is done you can move onto the extra details, images etc
 
 STEP 2 & 3
 	4. How do I only save something in memory in step 2 ?
 	-> use memory section in dev tools
-	5. What API can I use in step 3 if I don't wanna use google search ? 
-	(something opensource preferably)
+
+	5. add google places
 =============================
 ## Project 8
 =============================
