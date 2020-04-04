@@ -34,16 +34,6 @@ function setRadius(mymap, latitude, longitude){
 	})
 }
 
-// setInterval(function(){
-// reset center of map when it changes
-// mymap.setView([position[0], position[1]]);
-// removeMenu()
-// buildMenu(mymap, data)
-// setTimeout(function(){
-// mymap.setView([position[0], position[1]]);
-// }, 2000);
-// }, 4000);
-
 function getJsonData(){
 	let data = null;
 	var xhttp = new XMLHttpRequest();
@@ -132,22 +122,6 @@ function setMarkers(mymap, data) {
 	}
 }
 
-function placeRestaurants(data, mymap){
-	let i = 0;
-	for (let restaurant in data) {
-		// markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
-		// markers[i].bindPopup(restaurant.name)
-		newDiv.innerHTML = restaurant.name;
-		// if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
-		for (let j = 0; j < data[i].ratings.length; j++){
-			reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
-		}
-		console.log('hello ' + i)
-		i = i + 1;
-		// }
-	}
-}
-
 // called in setInterval in getUserPosition()
 function removeMenu(){
 	let menu = document.getElementsByClassName('sidenav')
@@ -166,6 +140,16 @@ function getStreetView(){
 			zoom: 1
 		});
 }
+
+// setInterval(function(){
+// reset center of map when it changes
+// mymap.setView([position[0], position[1]]);
+// removeMenu()
+// buildMenu(mymap, data)
+// setTimeout(function(){
+// mymap.setView([position[0], position[1]]);
+// }, 2000);
+// }, 4000);
 
 window.onload = function(event){
 	const mymap = initMap()

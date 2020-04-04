@@ -6,8 +6,6 @@
 
 STEP 1 (FOCUS OF TODAY'S SESSION)
 
-3. Add the markers for the restaurants to the map based on the user position based on the range you give it eg 2 km or whatever you choose
-
 4. Have the functions run to refresh everything if you change the view of the map so you clear out the markers and sidebar list and add the new view contents to both
 
 5. Once all of this is done you can move onto the extra details, images etc
