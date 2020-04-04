@@ -3,8 +3,8 @@
 		"id" : 1,
 		"name":"Bronco",
 		"address":"39 Rue des Petites Écuries, 75010 ville-chelou",
-		"lat":45.8737815,
-		"long":3.3501649,
+		"lat":45.2497815,
+		"long":5.8501649,
 		"ratings":[
 			{
 				"stars":4,
@@ -20,8 +20,8 @@
 		"id" : 2,
 		"name":"Babalou",
 		"address":"4 Rue Lamarck, 75018 tier-monde-city",
-		"lat":45.8865035,
-		"long":3.3442197,
+		"lat":45.2495035,
+		"long":5.8442197,
 		"ratings":[
 			{
 				"stars":5,
@@ -37,8 +37,8 @@
 		"id" : 3,
 		"name":"Yalami",
 		"address":"13 Rue Napoleon, 75038 destroyer-town",
-		"lat":45.7757702,
-		"long":3.5431913,
+		"lat":45.2497673,
+		"long":5.8531913,
 		"ratings":[
 			{
 				"stars":5,
@@ -54,8 +54,8 @@
 		"id" : 4,
 		"name":"French brasserie",
 		"address":"15 Rue de la Poste, Ici",
-		"lat":45.5157703,
-		"long":5.6431913,
+		"lat":45.5197703,
+		"long":5.8431913,
 		"ratings":[
 			{
 				"stars":2,
@@ -67,8 +67,8 @@
 		"id" : 5,
 		"name":"English  Café",
 		"address":"16 avenue d'ailleurs, Là-bas-ville",
-		"lat":45.2758012,
-		"long":5.5431587,
+		"lat":45.2798012,
+		"long":5.8431587,
 		"ratings":[
 			{
 				"stars":6,
