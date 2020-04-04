@@ -72,29 +72,80 @@ function filterTool(value){
 }
 
 // called in setInterval in getUserPosition()
-function buildMenu(mymap, data){
+function buildMenu(data){
 	let menu = document.getElementsByClassName("sidenav")[0];
-	let newDiv = document.createElement('div')
-	let reviewP = document.createElement('p')
-	placeRestaurants(data, mymap)
-	menu.appendChild(newDiv);
-	newDiv.appendChild(reviewP);
+	let i = 0
+	for (let restaurant of data) {
+		let newDiv = document.createElement('div')
+		let reviewP = document.createElement('p')
+		menu.appendChild(newDiv);
+		newDiv.appendChild(reviewP);
+		newDiv.innerHTML = restaurant.name;
+		// for (let j = 0; j < data[i].ratings.length; j++){
+		// 	reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
+		// }
+		console.log('restaurant nb ' + i)
+		i = i + 1;
+	}
+}
 
-	function placeRestaurants(data, mymap){
-		let markers = new Array();
-		let i = 0;
-		for (let restaurant of data) {
-			markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
-			markers[i].bindPopup(restaurant.name)
-			newDiv.innerHTML = restaurant.name;
-			if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
-				for (let j = 0; j < data[i].ratings.length; j++){
-					reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
-				}
-				console.log('hello ' + i)
-				i = i + 1;
-			}
+function setMarkers(mymap, data) {
+	let i = 0;
+	for (let restaurant in data) {
+		for (let j = 0; j < data[i].ratings.length; j++){
 		}
+		console.log('marker nb ' + i)
+		i = i + 1;
+	}
+	let beaches = [
+        ['Bondi Beach', -33.890542, 151.274856, 4],
+        ['Coogee Beach', -33.923036, 151.259052, 5],
+        ['Cronulla Beach', -34.028249, 151.157507, 3],
+        ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
+        ['Maroubra Beach', -33.950198, 151.259302, 1]
+      ];
+	 let image = {
+		 url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+		 // This marker is 20 pixels wide by 32 pixels high.
+		 size: new google.maps.Size(20, 32),
+		 // The origin for this image is (0, 0).
+		 origin: new google.maps.Point(0, 0),
+		 // The anchor for this image is the base of the flagpole at (0, 32).
+		 anchor: new google.maps.Point(0, 32)
+	 };
+	 // Shapes define the clickable region of the icon. The type defines an HTML
+	 // <area> element 'poly' which traces out a polygon as a series of X,Y points.
+	 // The final coordinate closes the poly by connecting to the first coordinate.
+	 let shape = {
+		 coords: [1, 1, 1, 20, 18, 20, 18, 1],
+		 type: 'poly'
+	 };
+	 for (let i = 0; i < beaches.length; i++) {
+		 let beach = beaches[i];
+		 let marker = new google.maps.Marker({
+			 position: {lat: beach[1], lng: beach[2]},
+			 map: mymap,
+			 icon: image,
+			 shape: shape,
+			 title: beach[0],
+			 zIndex: beach[3]
+		 });
+	 }
+}
+
+function placeRestaurants(data, mymap){
+	let i = 0;
+	for (let restaurant in data) {
+		// markers[i] = L.marker([restaurant.lat, restaurant.long]).addTo(mymap);
+		// markers[i].bindPopup(restaurant.name)
+		newDiv.innerHTML = restaurant.name;
+		// if (mymap.getBounds().contains(markers[i].getLatLng()) === true){
+		for (let j = 0; j < data[i].ratings.length; j++){
+			reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
+		}
+		console.log('hello ' + i)
+		i = i + 1;
+		// }
 	}
 }
 
@@ -120,5 +171,7 @@ function getStreetView(){
 window.onload = function(event){
 	const mymap = initMap()
 	const data = getJsonData()
+	buildMenu(data, mymap)
+	setMarkers(mymap, data)
 	// getStreetView()
 }
