@@ -62,18 +62,18 @@ function filterTool(value){
 }
 
 // called in setInterval in getUserPosition()
-function buildMenu(data){
+function updateMenu(data){
 	let menu = document.getElementsByClassName("sidenav")[0];
 	let i = 0
 	for (let restaurant of data) {
 		let newDiv = document.createElement('div')
-		// let reviewP = document.createElement('p')
-		menu.appendChild(newDiv);
-		// newDiv.appendChild(reviewP);
 		newDiv.innerHTML = restaurant.name;
-		// for (let j = 0; j < data[i].ratings.length; j++){
-		// 	reviewP.innerHTML = data[i].name + " stars " + data[i].ratings[j].stars
-		// }
+		menu.appendChild(newDiv);
+		for (let j = 0; j < restaurant.ratings.length; j++){
+			let reviewP = document.createElement('p')
+			reviewP.innerHTML = "Stars " + restaurant.ratings[j].stars
+			newDiv.appendChild(reviewP)
+		}
 		console.log('restaurant nb ' + i)
 		i = i + 1;
 	}
@@ -141,20 +141,19 @@ function getStreetView(){
 		});
 }
 
-// setInterval(function(){
-// reset center of map when it changes
-// mymap.setView([position[0], position[1]]);
-// removeMenu()
-// buildMenu(mymap, data)
-// setTimeout(function(){
-// mymap.setView([position[0], position[1]]);
-// }, 2000);
-// }, 4000);
 
 window.onload = function(event){
 	const mymap = initMap()
 	const data = getJsonData()
-	buildMenu(data, mymap)
+	updateMenu(data, mymap)
 	setMarkers(mymap, data)
 	// getStreetView()
+	// setInterval(function(){
+		// reset center of map when it changes
+		//removeMenu()
+		//buildMenu(mymap, data)
+		//setTimeout(function(){
+		//	//empty
+		//}, 2000);
+	//}, 4000);
 }
