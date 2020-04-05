@@ -6,15 +6,14 @@
 
 STEP 1 (FOCUS OF TODAY'S SESSION)
 
-4. Have the functions run to refresh everything if you change the view of the map so you clear out the markers and sidebar list and add the new view contents to both
+ - Have the functions run to refresh everything if you change the view of the map 
+ so you clear out the markers and sidebar list and add the new view contents to both
+ - add streetview
+ - add more restaurants google places API 
+ - add filter
+ - How do I only save something in memory in step 2 ? [-> use memory section in dev tools]
+ - How display a custom restaurant icon ? (optional)
 
-5. Once all of this is done you can move onto the extra details, images etc
-
-STEP 2 & 3
-	4. How do I only save something in memory in step 2 ?
-	-> use memory section in dev tools
-
-	5. add google places
 =============================
 ## Project 8
 =============================

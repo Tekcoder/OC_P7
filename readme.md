@@ -32,23 +32,12 @@
 
 ## HOW TO RUN MY APP :
 
-* ON LINUX : 
-
 	1. Clone this repository wherever you see fit on your machine
 
 	2. Install npm (node package manager)
 
 	3. Run npm install http-server
 
-	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar.
-That's it, you're done. 
+	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar. That's it, you're done. 
 
 	5. Enjoy !
-
-* ON WINDOWS :
-
-	Come on, let's be serious for a second. Install Linux.
-
-* ON MAC OS :
-
-	Refer to section about windows.	
