@@ -6,7 +6,7 @@ function initMap() {
 		// Center on user's current location if geolocation prompt allowed
 		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		mymap.setCenter(initialLocation);
-		mymap.setZoom(15);
+		mymap.setZoom(12);
 		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
 		console.log(`Latitude : ${position.coords.latitude}`)
 		console.log(`Longitude: ${position.coords.longitude}`)
@@ -16,9 +16,40 @@ function initMap() {
 			map: mymap,
 			title: 'This is my position'
 		})
+		let infowindow = new google.maps.InfoWindow();
+		google.maps.event.addListener(marker, 'click', function() {
+			infowindow.setContent(marker.title);
+			infowindow.open(mymap, this);
+		})
 		setRadius(mymap, position.coords.latitude, position.coords.longitude)
+		infowindow = new google.maps.InfoWindow();
+		let request = {
+			location: myLatLng,
+			radius: '2000',
+			type: ['restaurant']
+		};
+		let service = new google.maps.places.PlacesService(mymap);
+		service.nearbySearch(request, callback);
+		function createMarker(place) {
+			let marker = new google.maps.Marker({
+				map: mymap,
+				position: place.geometry.location
+			})
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.setContent(place.name);
+				infowindow.open(mymap, this);
+			})
+		}
+		function callback(results, status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				for (let i = 0; i < results.length; i++) {
+					createMarker(results[i])
+				}
+			}
+			console.log(results)
+		}
+		//in case there's an error with position services
 	}, function(positionError) {
-		// User denied geolocation prompt 
 		mymap.setCenter(new google.maps.LatLng(45.2493312, 5.822873599999999));
 		mymap.setZoom(5)
 	})
@@ -29,7 +60,7 @@ function setRadius(mymap, latitude, longitude){
 	let circle = new google.maps.Circle({
 		map: mymap,
 		center: new google.maps.LatLng(latitude, longitude),
-		radius: 1000
+		radius: 2000
 	})
 }
 
@@ -46,47 +77,10 @@ function getJsonData(){
 	return data
 }
 
-function getMoreRestaurants(mymap){
- 	function createMarker(place) {
- 		let marker = new google.maps.Marker({
- 			map: mymap,
- 			position: place.geometry.location
- 		})
- 		google.maps.event.addListener(marker, 'click', function() {
- 			infowindow.setContent(place.name);
- 			infowindow.open(mymap, this);
- 		})
-	}
-	function callback(results, status) {
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			for (let i = 0; i < results.length; i++) {
-				createMarker(results[i])
-				console.log(createMarker(results[i]))
-				console.log(results)
-			}
-		}
-	}
-	let saintismier = new google.maps.LatLng(45.2503121,5.7923691,13);
-	let infowindow = new google.maps.InfoWindow();
-	mymap = new google.maps.Map(document.getElementById('map'), {
-		center: saintismier,
-		zoom: 5
-	});
-	let request = {
-		location: saintismier,
-		radius: '5000',
-		type: ['restaurant']
-	};
-	let service = new google.maps.places.PlacesService(mymap);
-	service.nearbySearch(request, callback);
-	return mymap
-}
-
 //function doesn't work yet
 function getFilterValue(){
-	let element = document.getElementById('elementid')
+	let element = document.getElementById('stars')
 	let value = element.options[element.selectedIndex].value
-	let text = element.options[element.selectedIndex].text
 	return value
 }
 
@@ -151,8 +145,8 @@ function removeMenu(){
 }
 
 function getStreetView(){
-	let panorama;
-	panorama = new google.maps.StreetViewService(
+	let streetView = new google.maps.StreetViewService()
+	let panorama = new google.maps.StreetViewService(
 		document.getElementById('street-view'),
 		{
 			position: {lat: 37.869260, lng: -122.254811},
@@ -163,9 +157,9 @@ function getStreetView(){
 
 window.onload = function(event){
 	const data = getJsonData()
+	// let filter_value = getFilterValue()
+	// console.log(filter_value)
 	let mymap = initMap()
-	mymap = getMoreRestaurants(mymap)
-	getMoreRestaurants(mymap)
 	updateMenu(data, mymap)
 	setMarkers(mymap, data)
 	mymap.addListener('center_changed', function() {
