@@ -1,4 +1,6 @@
 "use strict"
+let clickedMarker = null;
+	let panorama = null
 
 function initMap(myLatLng) {
 	let mymap = new google.maps.Map(document.getElementById('map'))
@@ -75,7 +77,17 @@ function setMarkers(myLatLng, mymap) {
 	})
 	//draw user pos
 	let infowindow = new google.maps.InfoWindow();
+	let streetViewService = new google.maps.StreetViewService();
 	google.maps.event.addListener(marker, 'click', function() {
+		clickedMarker = marker;
+		panorama = new google.maps.StreetViewPanorama(streetview, {
+			navigationControl: false,
+			enableCloseButton: false,
+			addressControl: false,
+			linksControl: false,
+			visible: true
+		});
+		streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
 		infowindow.setContent(marker.title);
 		infowindow.open(mymap, this);
 	})
@@ -127,13 +139,9 @@ function setMarkers(myLatLng, mymap) {
 			}
 		})
 		allMarkers.push(marker)
-		//Defining streetview info-window
-		let streetViewService = new google.maps.StreetViewService();
-		// Create the shared infowindow with three DIV placeholders
-		// One for a text string, oned for the html content from the xml
-		// and one for the StreetView panorama.
 		let content = document.createElement("div");
 		let restaurantName = document.createElement("div");
+		restaurantName.innerHTML = marker.info.name
 		content.appendChild(restaurantName);
 		let streetview = document.createElement("div");
 		streetview.style.width = "200px";
@@ -142,7 +150,15 @@ function setMarkers(myLatLng, mymap) {
 		let htmlContent = document.createElement("div");
 		content.appendChild(htmlContent);
 		google.maps.event.addListener(marker, 'click', function() {
-			// infowindow.setContent(place.name);
+			panorama = new google.maps.StreetViewPanorama(streetview, {
+				navigationControl: false,
+				enableCloseButton: false,
+				addressControl: false,
+				linksControl: false,
+				visible: true
+			});
+			clickedMarker = marker;
+			streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
 			infowindow.setContent(content);
 			infowindow.open(mymap, this);
 		})
@@ -155,6 +171,45 @@ function setMarkers(myLatLng, mymap) {
 		}
 	}
 	return allMarkers
+}
+
+function processSVData(data, status) {
+	console.log('pipi')
+	if (status == google.maps.StreetViewStatus.OK) {
+		console.log('bla')
+		let marker = clickedMarker;
+		// openInfoWindow(clickedMarker);
+
+		if (!!panorama && !!panorama.setPano) {
+
+			panorama.setPano(data.location.pano);
+			panorama.setPov({
+				heading: 270,
+				pitch: 0,
+				zoom: 1
+			});
+			panorama.setVisible(true);
+
+			google.maps.event.addListener(marker, 'click', function() {
+
+				var markerPanoID = data.location.pano;
+				// Set the Pano to use the passed panoID
+				panorama.setPano(markerPanoID);
+				panorama.setPov({
+					heading: 270,
+					pitch: 0,
+					zoom: 1
+				});
+				panorama.setVisible(true);
+			});
+		}
+	} else {
+		// openInfoWindow(clickedMarker);
+		// title.innerHTML = clickedMarker.getTitle() + "<br>Street View data not found for this location";
+		// htmlContent.innerHTML = clickedMarker.myHtml;
+		panorama.setVisible(false);
+		// alert("Street View data not found for this location.");
+	}
 }
 
 function main(myLatLng){

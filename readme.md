@@ -16,10 +16,10 @@
 	[done]
 
 	4. When you click on a restaurant, show its google street view photo 
-	[WIP]
+	[done]
 
 	5. If restaurants aren't visible, don't put them in the menu. Else show them in the menu 
-	[WIP]
+	[done]
 
 	6. Filter tool display restaurant b/w X and Y stars. 
 	[WIP]
