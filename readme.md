@@ -6,17 +6,23 @@
 
 ## STEP 1: RESTAURANTS
 
-	1. Get user's location [done]
+	1. Get user's location 
+	[done]
 
-	2. Put focus on user's location [done]
+	2. Put focus on user's location 
+	[done]
 
-	3. Specific color marker on that location [done]
+	3. Specific color marker on that location 
+	[done]
 
-	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [WIP]
+	4. When you click on a restaurant, show its google street view photo 
+	[WIP]
 
-	5. When you click on a restaurant, show its google street view photo [WIP]
+	5. If restaurants aren't visible, don't put them in the menu. Else show them in the menu 
+	[WIP]
 
-	6. Filter tool display restaurant b/w X and Y stars. [WIP]
+	6. Filter tool display restaurant b/w X and Y stars. 
+	[WIP]
 
 ## STEP 2: ADD RESTAURANTS AND REVIEWS
 
@@ -38,6 +44,6 @@
 
 	3. Run npm install http-server
 
-	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar. That's it, you're done. 
+	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar. 
 
 	5. Enjoy !

@@ -6,7 +6,7 @@ function initMap() {
 		// CENTER ON USER'S CURRENT LOCATION IF GEOLOCATION PROMPT ALLOWED
 		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		mymap.setCenter(initialLocation);
-		mymap.setZoom(12);
+		mymap.setZoom(13);
 		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
 		console.log(`Latitude : ${position.coords.latitude}`)
 		console.log(`Longitude: ${position.coords.longitude}`)
@@ -24,6 +24,7 @@ function initMap() {
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.setContent(marker.title);
 			infowindow.open(mymap, this);
+			// sv.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
 		})
 		//DEFINE SEARCH RADIUS
 		setRadius(mymap, position.coords.latitude, position.coords.longitude)
@@ -44,12 +45,9 @@ function initMap() {
 			// One for a text string, oned for the html content from the xml
 			// and one for the StreetView panorama.
 			let content = document.createElement("div");
-			console.log(content)
 			let restaurantName = document.createElement("div");
-			console.log(restaurantName)
 			content.appendChild(restaurantName);
 			let streetview = document.createElement("div");
-			console.log(streetview)
 			streetview.style.width = "200px";
 			streetview.style.height = "200px";
 			content.appendChild(streetview);
@@ -103,10 +101,10 @@ function getJsonData(){
 	return data
 }
 
-//function doesn't work yet
+//to be called within setInterval
 function getFilterValue(){
 	let element = document.getElementById('stars')
-	let value = element.options[element.selectedIndex].value
+	let value = element.options[0].value
 	return value
 }
 
@@ -172,6 +170,7 @@ function removeMenu(){
 
 window.onload = function(event){
 	const data = getJsonData()
+	getFilterValue()
 	// let filter_value = getFilterValue()
 	// console.log(filter_value)
 	let mymap = initMap()
