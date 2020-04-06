@@ -10,13 +10,13 @@
 
 	2. Put focus on user's location [done]
 
-	3. Specific color marker on that location
+	3. Specific color marker on that location [done]
 
-	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [almost done]
+	4. If restaurants aren't visible, don't put them in the menu. Else show them in the menu [WIP]
 
-	5. When you click on a restaurant, show its google street view photo [Issues with integration of API]
+	5. When you click on a restaurant, show its google street view photo [WIP]
 
-	6. Filter tool display restaurant b/w X and Y stars. [almost done]
+	6. Filter tool display restaurant b/w X and Y stars. [WIP]
 
 ## STEP 2: ADD RESTAURANTS AND REVIEWS
 
@@ -28,7 +28,7 @@
 
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
-	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. 
+	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. [done]
 
 ## HOW TO RUN MY APP :
 

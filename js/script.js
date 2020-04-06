@@ -3,7 +3,7 @@
 function initMap() {
 	let mymap = new google.maps.Map(document.getElementById('map'))
 	navigator.geolocation.getCurrentPosition(function(position) {
-		// Center on user's current location if geolocation prompt allowed
+		// CENTER ON USER'S CURRENT LOCATION IF GEOLOCATION PROMPT ALLOWED
 		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		mymap.setCenter(initialLocation);
 		mymap.setZoom(12);
@@ -25,23 +25,44 @@ function initMap() {
 			infowindow.setContent(marker.title);
 			infowindow.open(mymap, this);
 		})
-		//call function to define search radius
+		//DEFINE SEARCH RADIUS
 		setRadius(mymap, position.coords.latitude, position.coords.longitude)
+		//PLACE MORE RESTAURANTS WITH GOOGLE PLACES
 		infowindow = new google.maps.InfoWindow();
 		let request = {
 			location: myLatLng,
 			radius: '2000',
 			type: ['restaurant']
 		};
+
 		let service = new google.maps.places.PlacesService(mymap);
 		service.nearbySearch(request, callback);
 		function createMarker(place) {
+			//Defining streetview info-window
+			let streetViewService = new google.maps.StreetViewService();
+			// Create the shared infowindow with three DIV placeholders
+			// One for a text string, oned for the html content from the xml
+			// and one for the StreetView panorama.
+			let content = document.createElement("div");
+			console.log(content)
+			let restaurantName = document.createElement("div");
+			console.log(restaurantName)
+			content.appendChild(restaurantName);
+			let streetview = document.createElement("div");
+			console.log(streetview)
+			streetview.style.width = "200px";
+			streetview.style.height = "200px";
+			content.appendChild(streetview);
+			let htmlContent = document.createElement("div");
+			content.appendChild(htmlContent);
+			//end streetview definition
 			let marker = new google.maps.Marker({
 				map: mymap,
 				position: place.geometry.location
 			})
 			google.maps.event.addListener(marker, 'click', function() {
-				infowindow.setContent(place.name);
+				// infowindow.setContent(place.name);
+				infowindow.setContent(content);
 				infowindow.open(mymap, this);
 			})
 		}
