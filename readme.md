@@ -30,11 +30,10 @@
 
 	8. Create a new restaurant when clicking on the map 
 	
-	[not necessary to keep the info after user leaves the page]
-
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
-	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. [done]
+	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. 
+	[done]
 
 ## HOW TO RUN MY APP :
 

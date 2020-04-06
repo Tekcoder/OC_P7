@@ -5,16 +5,7 @@
 		"address":"39 Rue des Petites Écuries, 75010 ville-chelou",
 		"lat":45.24555,
 		"long":5.82285,
-		"ratings":[
-			{
-				"stars":4,
-				"comment":"Great! But not many veggie options."
-			},
-			{
-				"stars":5,
-				"comment":"My favorite restaurant!"
-			}
-		]
+		"ratings": 4
 	},
 	{
 		"id" : 2,
@@ -22,16 +13,7 @@
 		"address":"4 Rue Lamarck, 75018 tier-monde-city",
 		"lat":45.2417312,
 		"long":5.823872,
-		"ratings":[
-			{
-				"stars":5,
-				"comment":"Tiny pizzeria next to Sacre Coeur!"
-			},
-			{
-				"stars":3,
-				"comment":"Meh, it was fine."
-			}
-		]
+		"ratings": 3
 	},
 	{
 		"id" : 3,
@@ -39,16 +21,7 @@
 		"address":"13 Rue Napoleon, 75038 destroyer-town",
 		"lat":45.2496044,
 		"long":5.822,
-		"ratings":[
-			{
-				"stars":5,
-				"comment":"Great place to have lunch. Or dinner. Or both actually."
-			},
-			{
-				"stars":5,
-				"comment":"dude it was awesome! I'd seriously recommend it to anyone who likes pizza!"
-			}
-		]
+		"ratings": 5
 	},
 	{
 		"id" : 4,
@@ -56,12 +29,7 @@
 		"address":"15 Rue de la Poste, Ici",
 		"lat":45.2403,
 		"long":5.82287,
-		"ratings":[
-			{
-				"stars":2,
-				"comment":"This place sucked... Never go there!"
-			}
-		]
+		"ratings": 2
 	},
 	{
 		"id" : 5,
@@ -69,19 +37,6 @@
 		"address":"16 avenue d'ailleurs, Là-bas-ville",
 		"lat":45.2498312,
 		"long":5.81111,
-		"ratings":[
-			{
-				"stars":6,
-				"comment":"I know it shouldn't be possible to rate a restaurant more than 5, but it rocked my world big time!"
-			},
-			{
-				"stars":4,
-				"comment":"Not bad at all"
-			},
-			{
-				"stars":1,
-				"comment":"Meh..."
-			}
-		]
+		"ratings": 6
 	}
 ]

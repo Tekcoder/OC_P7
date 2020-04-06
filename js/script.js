@@ -1,82 +1,14 @@
 "use strict"
 
-function initMap() {
-	let mymap = new google.maps.Map(document.getElementById('map'))
-	navigator.geolocation.getCurrentPosition(function(position) {
-		// CENTER ON USER'S CURRENT LOCATION IF GEOLOCATION PROMPT ALLOWED
-		let initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		mymap.setCenter(initialLocation);
-		mymap.setZoom(13);
-		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
-		console.log(`Latitude : ${position.coords.latitude}`)
-		console.log(`Longitude: ${position.coords.longitude}`)
-		console.log(`More or less ${position.coords.accuracy} meters.`)
-		let marker = new google.maps.Marker({
-			position: myLatLng,
-			map: mymap,
-			title: 'This is my position',
-			icon: {
-				url: '../img/position-icon.png',
-				scaledSize: new google.maps.Size(55, 55)
-			}
-		})
-		let infowindow = new google.maps.InfoWindow();
-		google.maps.event.addListener(marker, 'click', function() {
-			infowindow.setContent(marker.title);
-			infowindow.open(mymap, this);
-			// sv.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
-		})
-		//DEFINE SEARCH RADIUS
-		setRadius(mymap, position.coords.latitude, position.coords.longitude)
-		//PLACE MORE RESTAURANTS WITH GOOGLE PLACES
-		infowindow = new google.maps.InfoWindow();
-		let request = {
-			location: myLatLng,
-			radius: '2000',
-			type: ['restaurant']
-		};
 
-		let service = new google.maps.places.PlacesService(mymap);
-		service.nearbySearch(request, callback);
-		function createMarker(place) {
-			//Defining streetview info-window
-			let streetViewService = new google.maps.StreetViewService();
-			// Create the shared infowindow with three DIV placeholders
-			// One for a text string, oned for the html content from the xml
-			// and one for the StreetView panorama.
-			let content = document.createElement("div");
-			let restaurantName = document.createElement("div");
-			content.appendChild(restaurantName);
-			let streetview = document.createElement("div");
-			streetview.style.width = "200px";
-			streetview.style.height = "200px";
-			content.appendChild(streetview);
-			let htmlContent = document.createElement("div");
-			content.appendChild(htmlContent);
-			//end streetview definition
-			let marker = new google.maps.Marker({
-				map: mymap,
-				position: place.geometry.location
-			})
-			google.maps.event.addListener(marker, 'click', function() {
-				// infowindow.setContent(place.name);
-				infowindow.setContent(content);
-				infowindow.open(mymap, this);
-			})
-		}
-		function callback(results, status) {
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				for (let i = 0; i < results.length; i++) {
-					createMarker(results[i])
-				}
-			}
-			console.log(results)
-		}
-		//in case there's an error with position services
-	}, function(positionError) {
-		mymap.setCenter(new google.maps.LatLng(45.2493312, 5.822873599999999));
-		mymap.setZoom(5)
-	})
+function initMap(myLatLng) {
+	let mymap = new google.maps.Map(document.getElementById('map'))
+	let initialLocation = new google.maps.LatLng(myLatLng.lat, myLatLng.lng)
+	mymap.setCenter(initialLocation);
+	mymap.setZoom(13);
+	//DEFINE SEARCH RADIUS
+	setRadius(mymap, myLatLng.lat, myLatLng.lng)
+	//in case there's an error with position services
 	return mymap
 }
 
@@ -121,15 +53,28 @@ function updateMenu(data){
 		let newDiv = document.createElement('div')
 		newDiv.innerHTML = restaurant.name;
 		menu.appendChild(newDiv);
-		for (let j = 0; j < restaurant.ratings.length; j++){
-			let reviewP = document.createElement('p')
-			reviewP.innerHTML = "Stars " + restaurant.ratings[j].stars
-			newDiv.appendChild(reviewP)
-		}
+		let reviewP = document.createElement('p')
+		reviewP.innerHTML = "Stars " + restaurant.ratings
+		newDiv.appendChild(reviewP)
 	}
 }
 
-function setMarkers(mymap, data) {
+function setMarkers(myLatLng, mymap, data) {
+	let allMarkers = new Array()
+	let marker = new google.maps.Marker({
+		position: myLatLng,
+		map: mymap,
+		title: 'This is my position',
+		icon: {
+			url: '../img/position-icon.png',
+			scaledSize: new google.maps.Size(55, 55)
+		}
+	})
+	let infowindow = new google.maps.InfoWindow();
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.setContent(marker.title);
+		infowindow.open(mymap, this);
+	})
 	let image = {
 		url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
 		// This marker is 20 pixels wide by 32 pixels high.
@@ -153,10 +98,48 @@ function setMarkers(mymap, data) {
 			icon: image,
 			shape: shape
 		})
-		// console.log(marker) //ok
-		// console.log(mymap.getBounds()) //undefined
-		// console.log(mymap.getBounds().contains(marker.getPosition()))
-		// console.log(mymap.getBounds().contains(markers.getLatLng()) === true)
+	}
+	//PLACE MORE RESTAURANTS WITH GOOGLE PLACES
+	let request = {
+		location: myLatLng,
+		radius: '2000',
+		type: ['restaurant']
+	};
+	let service = new google.maps.places.PlacesService(mymap);
+	service.nearbySearch(request, callback);
+	function createMarker(place) {
+		let infowindow = new google.maps.InfoWindow();
+		let marker = new google.maps.Marker({
+			map: mymap,
+			position: place.geometry.location
+		})
+		//Defining streetview info-window
+		let streetViewService = new google.maps.StreetViewService();
+		// Create the shared infowindow with three DIV placeholders
+		// One for a text string, oned for the html content from the xml
+		// and one for the StreetView panorama.
+		let content = document.createElement("div");
+		let restaurantName = document.createElement("div");
+		content.appendChild(restaurantName);
+		let streetview = document.createElement("div");
+		streetview.style.width = "200px";
+		streetview.style.height = "200px";
+		content.appendChild(streetview);
+		let htmlContent = document.createElement("div");
+		content.appendChild(htmlContent);
+		google.maps.event.addListener(marker, 'click', function() {
+			// infowindow.setContent(place.name);
+			infowindow.setContent(content);
+			infowindow.open(mymap, this);
+		})
+	}
+	function callback(results, status) {
+		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			for (let i = 0; i < results.length; i++) {
+				createMarker(results[i])
+			}
+		}
+		console.log(results)
 	}
 }
 
@@ -164,28 +147,37 @@ function setMarkers(mymap, data) {
 function removeMenu(){
 	let menu = document.getElementsByClassName('sidenav')
 	console.log(menu)
-	document.body.menu.removeChild('p')
+	document.body.menu.removeChild('div')
 	console.log('ok')
 }
 
-window.onload = function(event){
+function main(myLatLng){
 	const data = getJsonData()
-	getFilterValue()
-	// let filter_value = getFilterValue()
-	// console.log(filter_value)
-	let mymap = initMap()
-	updateMenu(data, mymap)
-	setMarkers(mymap, data)
-	mymap.addListener('center_changed', function() {
+	let filter_value = getFilterValue()
+	let mymap = initMap(myLatLng)
+	updateMenu(data)
+	setMarkers(myLatLng, mymap, data)
+	google.maps.event.addListener(mymap, 'bounds_changed', function() {
 		// 3 seconds after the center of the map has changed, pan back to the
 		// marker.
-		console.log('center has changed')
+		console.log('bounds changed')
 		window.setTimeout(function() {
 			// mymap.panTo(marker.getPosition());
 		}, 3000);
 	})
-	google.maps.event.addListener(mymap, 'bounds_changed', function() {
-		// console.log(mymap.getBounds()); //null
-	})
 	// getStreetView()
+}
+window.onload = function(event){
+	navigator.geolocation.getCurrentPosition(function(position) {
+		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
+		main(myLatLng)
+		// console.log(`Latitude : ${position.coords.latitude}`)
+		// console.log(`Longitude: ${position.coords.longitude}`)
+		// console.log(`More or less ${position.coords.accuracy} meters.`)
+	},function(positionError) {
+		let myLatLng = {lat: 45.2493312, lng: 5.822873599999999}
+		main(myLatLng)
+		// mymap.setCenter(new google.maps.LatLng(, ));
+		// mymap.setZoom(5)
+	})
 }
