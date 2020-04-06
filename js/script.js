@@ -1,14 +1,11 @@
 "use strict"
 
-
 function initMap(myLatLng) {
 	let mymap = new google.maps.Map(document.getElementById('map'))
 	let initialLocation = new google.maps.LatLng(myLatLng.lat, myLatLng.lng)
 	mymap.setCenter(initialLocation);
 	mymap.setZoom(13);
-	//DEFINE SEARCH RADIUS
 	setRadius(mymap, myLatLng.lat, myLatLng.lng)
-	//in case there's an error with position services
 	return mymap
 }
 
@@ -47,19 +44,25 @@ function filterTool(value){
 	//switch(value)
 }
 
-function updateMenu(data){
-	let menu = document.getElementsByClassName("sidenav")[0];
-	for (let restaurant of data) {
-		let newDiv = document.createElement('div')
-		newDiv.innerHTML = restaurant.name;
-		menu.appendChild(newDiv);
-		let reviewP = document.createElement('p')
-		reviewP.innerHTML = "Stars " + restaurant.ratings
-		newDiv.appendChild(reviewP)
+function updateMenu(bounds, markers){
+	let menu = document.getElementById("menu");
+	menu.innerHTML = '<a id="menu-title" href="#">RESTAURANTS LIST:</a>'
+	for (let marker of markers) {
+		if(bounds.contains(marker.getPosition()) && marker.getVisible()){
+			let newDiv = document.createElement('div')
+			newDiv.innerHTML = marker.info.name
+			menu.appendChild(newDiv);
+			let reviewP = document.createElement('p')
+			reviewP.innerHTML = "Avg rating: " + marker.info.avg
+			newDiv.appendChild(reviewP)
+		}
 	}
+	// let menu = document.getElementsByClassName('sidenav')
+	// document.body.menu.removeChild('div')
 }
 
-function setMarkers(myLatLng, mymap, data) {
+function setMarkers(myLatLng, mymap) {
+	const data = getJsonData()
 	let allMarkers = new Array()
 	let marker = new google.maps.Marker({
 		position: myLatLng,
@@ -70,6 +73,7 @@ function setMarkers(myLatLng, mymap, data) {
 			scaledSize: new google.maps.Size(55, 55)
 		}
 	})
+	//draw user pos
 	let infowindow = new google.maps.InfoWindow();
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setContent(marker.title);
@@ -96,8 +100,13 @@ function setMarkers(myLatLng, mymap, data) {
 			position: {lat: restaurant.lat, lng: restaurant.long},
 			map: mymap,
 			icon: image,
-			shape: shape
+			shape: shape,
+			info: {
+				name: restaurant.name,
+				avg: restaurant.ratings
+			}
 		})
+		allMarkers.push(marker)
 	}
 	//PLACE MORE RESTAURANTS WITH GOOGLE PLACES
 	let request = {
@@ -111,8 +120,13 @@ function setMarkers(myLatLng, mymap, data) {
 		let infowindow = new google.maps.InfoWindow();
 		let marker = new google.maps.Marker({
 			map: mymap,
-			position: place.geometry.location
+			position: place.geometry.location,
+			info: {
+				name: place.name,
+				avg: place.rating
+			}
 		})
+		allMarkers.push(marker)
 		//Defining streetview info-window
 		let streetViewService = new google.maps.StreetViewService();
 		// Create the shared infowindow with three DIV placeholders
@@ -139,41 +153,27 @@ function setMarkers(myLatLng, mymap, data) {
 				createMarker(results[i])
 			}
 		}
-		console.log(results)
 	}
-}
-
-// called in setInterval in getUserPosition()
-function removeMenu(){
-	let menu = document.getElementsByClassName('sidenav')
-	console.log(menu)
-	document.body.menu.removeChild('div')
-	console.log('ok')
+	return allMarkers
 }
 
 function main(myLatLng){
-	const data = getJsonData()
 	let filter_value = getFilterValue()
 	let mymap = initMap(myLatLng)
-	updateMenu(data)
-	setMarkers(myLatLng, mymap, data)
+	let allMarkers = setMarkers(myLatLng, mymap)
 	google.maps.event.addListener(mymap, 'bounds_changed', function() {
 		// 3 seconds after the center of the map has changed, pan back to the
 		// marker.
-		console.log('bounds changed')
+		updateMenu(mymap.getBounds(), allMarkers)
 		window.setTimeout(function() {
 			// mymap.panTo(marker.getPosition());
 		}, 3000);
 	})
-	// getStreetView()
 }
 window.onload = function(event){
 	navigator.geolocation.getCurrentPosition(function(position) {
 		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
 		main(myLatLng)
-		// console.log(`Latitude : ${position.coords.latitude}`)
-		// console.log(`Longitude: ${position.coords.longitude}`)
-		// console.log(`More or less ${position.coords.accuracy} meters.`)
 	},function(positionError) {
 		let myLatLng = {lat: 45.2493312, lng: 5.822873599999999}
 		main(myLatLng)

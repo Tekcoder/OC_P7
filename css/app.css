@@ -54,7 +54,7 @@ code {
 	font-size:        30px;
 }
 
-.sidenav {
+#menu {
 	order:            2;
 	border:           5px solid black;
 	border-radius:    5px;
@@ -64,16 +64,16 @@ code {
 	overflow: scroll;
 }
 
-#sidenav-title, p{
+#menu-title, p{
 	background-color: #333333;
 	color: silver;
 }
 
-.sidenav div {
+#menu div {
 	color:            white;
 }
 
-.sidenav a:           hover{
+#menu a:           hover{
 	color:            orange;
 }
 
