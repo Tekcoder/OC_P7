@@ -14,13 +14,18 @@ function initMap() {
 		let marker = new google.maps.Marker({
 			position: myLatLng,
 			map: mymap,
-			title: 'This is my position'
+			title: 'This is my position',
+			icon: {
+				url: '../img/position-icon.png',
+				scaledSize: new google.maps.Size(55, 55)
+			}
 		})
 		let infowindow = new google.maps.InfoWindow();
 		google.maps.event.addListener(marker, 'click', function() {
 			infowindow.setContent(marker.title);
 			infowindow.open(mymap, this);
 		})
+		//call function to define search radius
 		setRadius(mymap, position.coords.latitude, position.coords.longitude)
 		infowindow = new google.maps.InfoWindow();
 		let request = {
@@ -142,17 +147,6 @@ function removeMenu(){
 	console.log(menu)
 	document.body.menu.removeChild('p')
 	console.log('ok')
-}
-
-function getStreetView(){
-	let streetView = new google.maps.StreetViewService()
-	let panorama = new google.maps.StreetViewService(
-		document.getElementById('street-view'),
-		{
-			position: {lat: 37.869260, lng: -122.254811},
-			pov: {heading: 165, pitch: 0},
-			zoom: 1
-		});
 }
 
 window.onload = function(event){
