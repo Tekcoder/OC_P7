@@ -45,4 +45,16 @@
 
 	4. Run http-server in "OC P7" directory. Then type localhost:8080 in your browser url bar. 
 
-	5. Enjoy !
+	5. It's not working ? This means I deactivated my API key. To solve this :
+
+		* Go to console.developers.google.com
+
+		* Get an API key
+
+		* Enable billing
+
+		* Enable the necessary APIs (Maps Javascript, Places, Streetview)
+
+	6. You're all set. Enjoy !
+
+	N.B : To run this app, you need to have your own Google Maps API key, to enable 
