@@ -40,10 +40,10 @@ function getFilterValue(){
 }
 
 //function doesn't work yet
-function filterTool(value){
-	//empty	
-	//empty	
-	//switch(value)
+function filterTool(value, rating){
+	if (rating < value){
+		//remove it from menu
+	}
 }
 
 function updateMenu(bounds, markers){
