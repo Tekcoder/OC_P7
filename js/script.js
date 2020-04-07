@@ -73,9 +73,9 @@ function setMarkers(myLatLng, mymap) {
 		icon: {
 			url: '../img/position-icon.png',
 			scaledSize: new google.maps.Size(55, 55)
-		}
+		},
+		animation: google.maps.Animation.DROP
 	})
-	//draw user pos
 	let infowindow = new google.maps.InfoWindow();
 	let streetViewService = new google.maps.StreetViewService();
 	google.maps.event.addListener(marker, 'click', function() {
@@ -116,7 +116,8 @@ function setMarkers(myLatLng, mymap) {
 			info: {
 				name: restaurant.name,
 				avg: restaurant.ratings
-			}
+			},
+			animation: google.maps.Animation.DROP
 		})
 		allMarkers.push(marker)
 	}
@@ -136,7 +137,8 @@ function setMarkers(myLatLng, mymap) {
 			info: {
 				name: place.name,
 				avg: place.rating
-			}
+			},
+			animation: google.maps.Animation.DROP
 		})
 		allMarkers.push(marker)
 		let content = document.createElement("div");
@@ -164,24 +166,22 @@ function setMarkers(myLatLng, mymap) {
 		})
 	}
 	function callback(results, status) {
+		// console.log(results)
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
 			for (let i = 0; i < results.length; i++) {
 				createMarker(results[i])
 			}
 		}
 	}
+	console.log(allMarkers)
 	return allMarkers
 }
 
 function processSVData(data, status) {
-	console.log('pipi')
 	if (status == google.maps.StreetViewStatus.OK) {
-		console.log('bla')
 		let marker = clickedMarker;
 		// openInfoWindow(clickedMarker);
-
 		if (!!panorama && !!panorama.setPano) {
-
 			panorama.setPano(data.location.pano);
 			panorama.setPov({
 				heading: 270,
@@ -189,10 +189,8 @@ function processSVData(data, status) {
 				zoom: 1
 			});
 			panorama.setVisible(true);
-
 			google.maps.event.addListener(marker, 'click', function() {
-
-				var markerPanoID = data.location.pano;
+				let markerPanoID = data.location.pano;
 				// Set the Pano to use the passed panoID
 				panorama.setPano(markerPanoID);
 				panorama.setPov({
@@ -217,12 +215,9 @@ function main(myLatLng){
 	let mymap = initMap(myLatLng)
 	let allMarkers = setMarkers(myLatLng, mymap)
 	google.maps.event.addListener(mymap, 'bounds_changed', function() {
-		// 3 seconds after the center of the map has changed, pan back to the
-		// marker.
 		updateMenu(mymap.getBounds(), allMarkers)
-		window.setTimeout(function() {
-			// mymap.panTo(marker.getPosition());
-		}, 3000);
+		filter_value = getFilterValue()
+		console.log(filter_value)
 	})
 }
 window.onload = function(event){
