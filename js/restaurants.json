@@ -3,40 +3,65 @@
 		"id" : 1,
 		"name":"Bronco",
 		"address":"39 Rue des Petites Écuries, 75010 ville-chelou",
-		"lat":45.24555,
-		"long":5.82285,
-		"ratings": 4
+		"loc" : {
+			"lat":45.24555,
+			"lng":5.82285
+		},
+		"reviews": [{
+			"comment": "I am so satisfied",
+			"rating": 4
+		}]
 	},
 	{
 		"id" : 2,
 		"name":"Babalou",
 		"address":"4 Rue Lamarck, 75018 tier-monde-city",
-		"lat":45.2417312,
-		"long":5.823872,
-		"ratings": 3
+		"loc" : {
+			"lat":45.2417312,
+			"lng":5.823872
+		},
+		"reviews": [{
+			"comment": "Had an amazing lunch",
+			"rating": 5
+		}]
 	},
 	{
 		"id" : 3,
 		"name":"Yalami",
 		"address":"13 Rue Napoleon, 75038 destroyer-town",
-		"lat":45.2496044,
-		"long":5.822,
-		"ratings": 5
+		"loc" : {
+			"lat":45.2496044,
+			"lng":5.822
+		},
+		"reviews": [{
+			"comment": "Happy meal",
+			"rating": 5
+		}]
 	},
 	{
 		"id" : 4,
 		"name":"French brasserie",
 		"address":"15 Rue de la Poste, Ici",
-		"lat":45.2403,
-		"long":5.82287,
-		"ratings": 2
+		"loc" : {
+			"lat":45.2403,
+			"lng":5.82287
+		},
+		"reviews": [{
+			"comment": "I had fun big time",
+			"rating": 2
+		}]
 	},
 	{
 		"id" : 5,
 		"name":"English  Café",
 		"address":"16 avenue d'ailleurs, Là-bas-ville",
-		"lat":45.2498312,
-		"long":5.81111,
-		"ratings": 6
+		"loc" : {
+			"lat":45.2498312,
+			"lng":5.81111
+		},
+		"reviews": [{
+			"comment": "Trololul magical time",
+			"rating": 3.5
+		}]
 	}
 ]

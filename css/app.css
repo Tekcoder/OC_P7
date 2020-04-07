@@ -84,3 +84,7 @@ code {
 #street-view {
   height: 100%;
 }
+
+label{
+	color: white;
+}

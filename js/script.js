@@ -1,6 +1,42 @@
 "use strict"
-let clickedMarker = null;
-	let panorama = null
+
+
+// let restaurant = {
+//	id: null,
+//	name: null,
+//	reviews: [{
+//		rating: null,
+//		comment: null
+//	}],
+//	loc: {
+//		lat: null,
+//		lng: null
+//	}
+// }
+
+class Restaurant {
+	constructor(id, name, reviews, loc){
+		this.id = id
+		this.name = name
+		this.reviews = reviews
+		this.loc = loc
+	}
+
+	rating(){
+		let sum = 0
+		for(let review of this.reviews){
+			sum += review.rating
+		}
+		return sum / this.reviews.length
+	}
+
+	addReview(rating, comment){
+		this.reviews.push({
+			rating: rating,
+			comment: comment
+		})
+	}
+}
 
 function initMap(myLatLng) {
 	let mymap = new google.maps.Map(document.getElementById('map'))
@@ -8,6 +44,16 @@ function initMap(myLatLng) {
 	mymap.setCenter(initialLocation);
 	mymap.setZoom(13);
 	setRadius(mymap, myLatLng.lat, myLatLng.lng)
+	let marker = new google.maps.Marker({
+		position: myLatLng,
+		map: mymap,
+		title: 'This is my position',
+		icon: {
+			url: '../img/position-icon.png',
+			scaledSize: new google.maps.Size(55, 55)
+		},
+		animation: google.maps.Animation.DROP
+	})
 	return mymap
 }
 
@@ -32,149 +78,153 @@ function getJsonData(){
 	return data
 }
 
-//to be called within setInterval
 function getFilterValue(){
-	let element = document.getElementById('stars')
-	let value = element.options[0].value
-	return value
-}
-
-//function doesn't work yet
-function filterTool(value, rating){
-	if (rating < value){
-		//remove it from menu
+	return {
+		min : document.getElementById('stars_min').value,
+		max : document.getElementById('stars_max').value
 	}
 }
 
-function updateMenu(bounds, markers){
+function updateMenu(bounds, env){
 	let menu = document.getElementById("menu");
 	menu.innerHTML = '<a id="menu-title" href="#">RESTAURANTS LIST:</a>'
-	for (let marker of markers) {
-		if(bounds.contains(marker.getPosition()) && marker.getVisible()){
-			let newDiv = document.createElement('div')
-			newDiv.innerHTML = marker.info.name
-			menu.appendChild(newDiv);
-			let reviewP = document.createElement('p')
-			reviewP.innerHTML = "Avg rating: " + marker.info.avg
-			newDiv.appendChild(reviewP)
-		}
-	}
-	// let menu = document.getElementsByClassName('sidenav')
-	// document.body.menu.removeChild('div')
-}
-
-function setMarkers(myLatLng, mymap) {
-	const data = getJsonData()
-	let allMarkers = new Array()
-	let marker = new google.maps.Marker({
-		position: myLatLng,
-		map: mymap,
-		title: 'This is my position',
-		icon: {
-			url: '../img/position-icon.png',
-			scaledSize: new google.maps.Size(55, 55)
-		},
-		animation: google.maps.Animation.DROP
-	})
-	let infowindow = new google.maps.InfoWindow();
-	let streetViewService = new google.maps.StreetViewService();
-	google.maps.event.addListener(marker, 'click', function() {
-		clickedMarker = marker;
-		panorama = new google.maps.StreetViewPanorama(streetview, {
-			navigationControl: false,
-			enableCloseButton: false,
-			addressControl: false,
-			linksControl: false,
-			visible: true
-		});
-		streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
-		infowindow.setContent(marker.title);
-		infowindow.open(mymap, this);
-	})
-	let image = {
-		url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-		// This marker is 20 pixels wide by 32 pixels high.
-		size: new google.maps.Size(20, 32),
-		// The origin for this image is (0, 0).
-		origin: new google.maps.Point(0, 0),
-		// The anchor for this image is the base of the flagpole at (0, 32).
-		anchor: new google.maps.Point(0, 32)
-	};
-	// Shapes define the clickable region of the icon. The type defines an HTML
-	// <area> element 'poly' which traces out a polygon as a series of X,Y points.
-	// The final coordinate closes the poly by connecting to the first coordinate.
-	let shape = {
-		coords: [1, 1, 1, 20, 18, 20, 18, 1],
-		type: 'poly'
-	};
-	for (let restaurant of data) {
-		let marker = new google.maps.Marker({
-			position: {lat: restaurant.lat, lng: restaurant.long},
-			map: mymap,
-			icon: image,
-			shape: shape,
-			info: {
-				name: restaurant.name,
-				avg: restaurant.ratings
-			},
-			animation: google.maps.Animation.DROP
-		})
-		allMarkers.push(marker)
-	}
-	//PLACE MORE RESTAURANTS WITH GOOGLE PLACES
-	let request = {
-		location: myLatLng,
-		radius: '2000',
-		type: ['restaurant']
-	};
-	let service = new google.maps.places.PlacesService(mymap);
-	service.nearbySearch(request, callback);
-	function createMarker(place) {
-		let infowindow = new google.maps.InfoWindow();
-		let marker = new google.maps.Marker({
-			map: mymap,
-			position: place.geometry.location,
-			info: {
-				name: place.name,
-				avg: place.rating
-			},
-			animation: google.maps.Animation.DROP
-		})
-		allMarkers.push(marker)
-		let content = document.createElement("div");
-		let restaurantName = document.createElement("div");
-		restaurantName.innerHTML = marker.info.name
-		content.appendChild(restaurantName);
-		let streetview = document.createElement("div");
-		streetview.style.width = "200px";
-		streetview.style.height = "200px";
-		content.appendChild(streetview);
-		let htmlContent = document.createElement("div");
-		content.appendChild(htmlContent);
-		google.maps.event.addListener(marker, 'click', function() {
-			panorama = new google.maps.StreetViewPanorama(streetview, {
-				navigationControl: false,
-				enableCloseButton: false,
-				addressControl: false,
-				linksControl: false,
-				visible: true
-			});
-			clickedMarker = marker;
-			streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
-			infowindow.setContent(content);
-			infowindow.open(mymap, this);
-		})
-	}
-	function callback(results, status) {
-		// console.log(results)
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			for (let i = 0; i < results.length; i++) {
-				createMarker(results[i])
+	let filter = getFilterValue()
+	for (let i = 0; i < env.markers.length; i++) {
+		if(bounds.contains(env.markers[i].getPosition()) && env.markers[i].getVisible()){
+			let rating = env.restaurants[i].rating()
+			if(filter.min <= rating && rating <= filter.max){
+				let newDiv = document.createElement('div')
+				newDiv.innerHTML = env.restaurants[i].name
+				menu.appendChild(newDiv);
+				let reviewP = document.createElement('p')
+				reviewP.innerHTML = "Avg rating: " + rating
+				newDiv.appendChild(reviewP)
 			}
 		}
 	}
-	console.log(allMarkers)
-	return allMarkers
+}
+
+async function getRestaurants(env){
+	const data = getJsonData()
+	let restaurants = new Array()
+	for (let restaurant of data){
+		restaurants.push(new Restaurant(
+			restaurants.length, //id
+			restaurant.name,
+			restaurant.reviews,
+			restaurant.loc
+		))
+	}
+	let request = {
+		location: env.userLoc,
+		radius: '2000',
+		type: ['restaurant']
+	};
+	let service = new google.maps.places.PlacesService(env.map);
+
+	function nearbySearchSync(query) {
+		return new Promise((resolve, reject) => {
+			service.nearbySearch(query,(successResponse) => {
+				resolve(successResponse);
+			});
+		});
+	}
+
+	function callback(results, status) {}
+
+	try {
+		let results = await nearbySearchSync(request, callback);
+			for (let i = 0; i < results.length; i++) {
+				// createMarker(results[i])
+				restaurants.push(new Restaurant(
+					restaurants.length,
+					results[i].name,
+					[{
+						rating: results[i].rating,
+						comment: ""
+					}],
+					{
+						lat: results[i].geometry.location.lat(),
+						lng: results[i].geometry.location.lng()
+					}
+				))
+			}
+	} catch (error) {
+		console.log("fatal error");
+	}
+
+	return restaurants
+}
+
+function getPanorama(){
+	return new google.maps.StreetViewPanorama(streetview, {
+		navigationControl: false,
+		enableCloseButton: false,
+		addressControl: false,
+		linksControl: false,
+		visible: true
+	});
+}
+
+// function placeMarkers(env){
+//	let infowindow = new google.maps.InfoWindow();
+//	let streetViewService = new google.maps.StreetViewService();
+//	google.maps.event.addListener(marker, 'click', function() {
+//		clickedMarker = marker;
+//		streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
+//		infowindow.setContent(marker.title);
+//		infowindow.open(mymap, this);
+//	})
+//	let infowindow = new google.maps.InfoWindow();
+//	for (let marker of env.markers){
+//		let marker = new google.maps.Marker({
+//			map: env.map,
+//			position: place.geometry.location,
+//			info: {
+//				name: place.name,
+//				avg: place.rating
+//			},
+//			animation: google.maps.Animation.DROP
+//		})
+//	}
+//	allMarkers.push(marker)
+//	let content = document.createElement("div");
+//	let restaurantName = document.createElement("div");
+//	restaurantName.innerHTML = marker.info.name
+//	content.appendChild(restaurantName);
+//	let streetview = document.createElement("div");
+//	streetview.style.width = "200px";
+//	streetview.style.height = "200px";
+//	content.appendChild(streetview);
+//	let htmlContent = document.createElement("div");
+//	content.appendChild(htmlContent);
+//	google.maps.event.addListener(marker, 'click', function() {
+//		panorama = new google.maps.StreetViewPanorama(streetview, {
+//			navigationControl: false,
+//			enableCloseButton: false,
+//			addressControl: false,
+//			linksControl: false,
+//			visible: true
+//		});
+//		clickedMarker = marker;
+//		streetViewService.getPanoramaByLocation(marker.getPosition(), 50, processSVData);
+//		infowindow.setContent(content);
+//		infowindow.open(mymap, this);
+//	})
+// }
+
+function createMarkers(env) {
+	console.log(env.restaurants)
+	let markers = new Array()
+	for (let i = 0; i < env.restaurants.length; i++) {
+		let marker = new google.maps.Marker({
+			position: env.restaurants[i].loc,
+			map: env.map,
+			animation: google.maps.Animation.DROP
+		})
+		markers.push(marker)
+	}
+	return markers
 }
 
 function processSVData(data, status) {
@@ -210,16 +260,24 @@ function processSVData(data, status) {
 	}
 }
 
-function main(myLatLng){
-	let filter_value = getFilterValue()
-	let mymap = initMap(myLatLng)
-	let allMarkers = setMarkers(myLatLng, mymap)
-	google.maps.event.addListener(mymap, 'bounds_changed', function() {
-		updateMenu(mymap.getBounds(), allMarkers)
-		filter_value = getFilterValue()
-		console.log(filter_value)
+async function main(myLatLng){
+	let env = {
+		clickedMarker: null,
+		panorama: null,
+		map: initMap(myLatLng),
+		userLoc: myLatLng,
+		restaurants: new Array(),
+		markers: new Array()
+	} 
+	env.restaurants = await getRestaurants(env)
+	env.markers = createMarkers(env)
+	console.log(env.restaurants)
+	// placeMarkers(env)
+	google.maps.event.addListener(env.map, 'bounds_changed', function() {
+		updateMenu(env.map.getBounds(), env)
 	})
 }
+
 window.onload = function(event){
 	navigator.geolocation.getCurrentPosition(function(position) {
 		let myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
@@ -227,7 +285,5 @@ window.onload = function(event){
 	},function(positionError) {
 		let myLatLng = {lat: 45.2493312, lng: 5.822873599999999}
 		main(myLatLng)
-		// mymap.setCenter(new google.maps.LatLng(, ));
-		// mymap.setZoom(5)
 	})
 }
