@@ -1,8 +1,6 @@
 "use strict"
 
-
 // let restaurant = {
-//	id: null,
 //	name: null,
 //	reviews: [{
 //		rating: null,
@@ -15,8 +13,7 @@
 // }
 
 class Restaurant {
-	constructor(id, name, reviews, loc){
-		this.id = id
+	constructor(name, reviews, loc){
 		this.name = name
 		this.reviews = reviews
 		this.loc = loc
@@ -109,7 +106,6 @@ async function getRestaurants(env){
 	let restaurants = new Array()
 	for (let restaurant of data){
 		restaurants.push(new Restaurant(
-			restaurants.length, //id
 			restaurant.name,
 			restaurant.reviews,
 			restaurant.loc
@@ -137,7 +133,6 @@ async function getRestaurants(env){
 			for (let i = 0; i < results.length; i++) {
 				// createMarker(results[i])
 				restaurants.push(new Restaurant(
-					restaurants.length,
 					results[i].name,
 					[{
 						rating: results[i].rating,
@@ -214,7 +209,6 @@ function getPanorama(){
 // }
 
 function createMarkers(env) {
-	console.log(env.restaurants)
 	let markers = new Array()
 	for (let i = 0; i < env.restaurants.length; i++) {
 		let marker = new google.maps.Marker({
@@ -261,21 +255,25 @@ function processSVData(data, status) {
 }
 
 async function main(myLatLng){
-	let env = {
-		clickedMarker: null,
-		panorama: null,
-		map: initMap(myLatLng),
-		userLoc: myLatLng,
-		restaurants: new Array(),
-		markers: new Array()
-	} 
-	env.restaurants = await getRestaurants(env)
-	env.markers = createMarkers(env)
-	console.log(env.restaurants)
-	// placeMarkers(env)
-	google.maps.event.addListener(env.map, 'bounds_changed', function() {
+	try {
+		let env = {
+			clickedMarker: null,
+			panorama: null,
+			map: initMap(myLatLng),
+			userLoc: myLatLng,
+			restaurants: new Array(),
+			markers: new Array()
+		} 
+		env.restaurants = await getRestaurants(env)
+		env.markers = createMarkers(env)
 		updateMenu(env.map.getBounds(), env)
-	})
+		// placeMarkers(env)
+		google.maps.event.addListener(env.map, 'bounds_changed', function() {
+			updateMenu(env.map.getBounds(), env)
+		})
+	} catch(error){
+		console.log(error)
+	}
 }
 
 window.onload = function(event){

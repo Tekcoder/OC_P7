@@ -28,7 +28,13 @@
 
 	7. Add a review to existing restaurants (onclick event) / create a form, essentially
 
+	- modify env.restaurants dynamically
+	- use method addReview() in class Restaurant
+	- update menu depending on filter
+
 	8. Create a new restaurant when clicking on the map 
+
+	- right click event add a marker
 	
 ## STEP 3: INTEGRATION WITH GOOGLE PLACES API
 
