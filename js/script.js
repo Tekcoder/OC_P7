@@ -3,6 +3,7 @@
 // let restaurant = {
 //	name: null,
 //	reviews: [{
+//		name: null,
 //		rating: null,
 //		comment: null
 //	}],
@@ -27,8 +28,9 @@ class Restaurant {
 		return sum / this.reviews.length
 	}
 
-	addReview(rating, comment){
+	addReview(name, rating, comment){
 		this.reviews.push({
+			name: name,
 			rating: rating,
 			comment: comment
 		})
@@ -82,20 +84,42 @@ function getFilterValue(){
 	}
 }
 
+function reviewPrompt(env, i){
+	let name = prompt("name")
+	let rating = parseInt(prompt("rating"))
+	let comment = prompt("comment")
+	env.restaurants[i].addReview(name, rating, comment)
+	updateMenu(env.map.getBounds(), env)
+}
+
 function updateMenu(bounds, env){
 	let menu = document.getElementById("menu");
 	menu.innerHTML = '<a id="menu-title" href="#">RESTAURANTS LIST:</a>'
 	let filter = getFilterValue()
 	for (let i = 0; i < env.markers.length; i++) {
 		if(bounds.contains(env.markers[i].getPosition()) && env.markers[i].getVisible()){
-			let rating = env.restaurants[i].rating()
-			if(filter.min <= rating && rating <= filter.max){
-				let newDiv = document.createElement('div')
-				newDiv.innerHTML = env.restaurants[i].name
-				menu.appendChild(newDiv);
-				let reviewP = document.createElement('p')
-				reviewP.innerHTML = "Avg rating: " + rating
-				newDiv.appendChild(reviewP)
+			let avgRating = env.restaurants[i].rating()
+			if(filter.min <= avgRating && avgRating <= filter.max){
+				let restaurant = document.createElement('div')
+				let title = document.createElement('p')
+				menu.appendChild(restaurant);
+				let button = document.createElement('button')
+				button.innerHTML = " + "
+				title.innerHTML = env.restaurants[i].name + " (" + avgRating + ")" 
+				title.appendChild(button)
+				button.addEventListener("click", function(){
+					reviewPrompt(env, i)
+				})
+				restaurant.appendChild(title)
+				if(env.restaurants[i].reviews.length > 0){
+					let reviews  = document.createElement('div')
+					for(let review of env.restaurants[i].reviews){
+						let comment = document.createElement('p')
+						comment.innerHTML = review.name + " (" + review.rating + "): " + review.comment
+						reviews.appendChild(comment)
+					}
+					restaurant.appendChild(reviews)
+				}
 			}
 		}
 	}
@@ -130,13 +154,14 @@ async function getRestaurants(env){
 
 	try {
 		let results = await nearbySearchSync(request, callback);
-			for (let i = 0; i < results.length; i++) {
-				// createMarker(results[i])
-				restaurants.push(new Restaurant(
-					results[i].name,
-					[{
-						rating: results[i].rating,
-						comment: ""
+		for (let i = 0; i < results.length; i++) {
+			// createMarker(results[i])
+			restaurants.push(new Restaurant(
+				results[i].name,
+				[{
+					name: "The google hero", // person who left review
+					rating: results[i].rating,
+					comment: ""
 					}],
 					{
 						lat: results[i].geometry.location.lat(),
@@ -270,6 +295,30 @@ async function main(myLatLng){
 		// placeMarkers(env)
 		google.maps.event.addListener(env.map, 'bounds_changed', function() {
 			updateMenu(env.map.getBounds(), env)
+		})
+		google.maps.event.addListener(env.map, "dblclick", function(event){
+			let marker = new google.maps.Marker({
+				position: event.latLng,
+				map: env.map,
+				animation: google.maps.Animation.DROP
+			})
+			let restaurantName = prompt("Name of the restaurant: ")
+			let person = prompt("What's your name: ")
+			let rating = parseInt(prompt("Rate us with a nb"))
+			let comment = prompt("Leave us a comment: ")
+			env.markers.push(marker)
+			env.restaurants.push(new Restaurant(
+				restaurantName,
+				[{
+					name: person, // name of person who left review
+					rating: rating,
+					comment: comment
+				}],
+				{
+					lat: event.latLng.lat(),
+					lng: event.latLng.lng()
+				}
+			))
 		})
 	} catch(error){
 		console.log(error)

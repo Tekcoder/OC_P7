@@ -4,32 +4,28 @@
 ## Project 7
 ==============================
 
-STEP 1 (FOCUS OF TODAY'S SESSION)
+If everything goes well, I'll be done with all projects by next Wednesday
+So no need for a next session ?
 
- - Have the functions run to refresh everything if you change the view of the map 
- so you clear out the markers and sidebar list and add the new view contents to both
- - add streetview
- - add more restaurants google places API 
- - add filter
- - How do I only save something in memory in step 2 ? [-> use memory section in dev tools]
- - How display a custom restaurant icon ? (optional)
+	1. Can I be penalized for having used XMLHTTP request
+	2. Only step 2 left :
+		- do you have documentation for me ?
+		- do you have an example project I could refer to ? (send via email)
 
 =============================
 ## Project 8
 =============================
-	1. How much Jasmine do I need to know ?
-	2. How does Jasmine work in terms of testing ? 
-	Does it compare the test written with the actual code ? Or is
-	it just some sort of outline ?
-	-> when I run jasmine in my browser, it's all good.
-	-> when I do it in my terminal, less so.
-
+	1. Speak about the requirements together ?
+	2. Same as P7, do you have an example project I could refer to ?
 
 ==============================
 ## Project 9
 ==============================
-1. When should next session be ?
-	* Wednesday 10a.m ?
-	* Friday ?
-2. Can you work with LPIC-1 as sysadmin?
-Or do you need level 2 or 3 ?
+	1. I finished project 9 entirely
+
+==============================
+## ZOOM
+==============================
+
+It's not so safe so why use it at all when there are 
+so many other better and opensource tools? (like tox, whereby)

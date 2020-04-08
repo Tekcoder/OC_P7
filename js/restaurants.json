@@ -8,6 +8,7 @@
 			"lng":5.82285
 		},
 		"reviews": [{
+			"name": "abi",
 			"comment": "I am so satisfied",
 			"rating": 4
 		}]
@@ -21,6 +22,7 @@
 			"lng":5.823872
 		},
 		"reviews": [{
+			"name": "abi",
 			"comment": "Had an amazing lunch",
 			"rating": 5
 		}]
@@ -34,6 +36,7 @@
 			"lng":5.822
 		},
 		"reviews": [{
+			"name": "abi",
 			"comment": "Happy meal",
 			"rating": 5
 		}]
@@ -47,6 +50,7 @@
 			"lng":5.82287
 		},
 		"reviews": [{
+			"name": "abi",
 			"comment": "I had fun big time",
 			"rating": 2
 		}]
@@ -60,6 +64,7 @@
 			"lng":5.81111
 		},
 		"reviews": [{
+			"name": "abi",
 			"comment": "Trololul magical time",
 			"rating": 3.5
 		}]
