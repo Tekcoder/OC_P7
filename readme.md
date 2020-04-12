@@ -1,6 +1,6 @@
 # Project 7 ©Iannetta Philippe 
 
-![Alt text](./site-screenshot-2.png "Screenshot 1")
+![Alt text](./Screenshot_OC_P7.png "OC P7 Screenshot")
 
 -> FIRST I'LL DO STEP 1, THEN STEP 2 AND FINALLY STEP 3 !
 
