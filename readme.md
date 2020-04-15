@@ -24,6 +24,8 @@
 
 	8. Create a new restaurant when clicking on the map 
 
+## STEP 3: ADD Google Places
+
 	9. Find an API to retrieve restaurants and reviews! Use it to display additional restaurants and reviews on your map so you don't have to use only your JSON file. 
 
 ## HOW TO RUN MY APP :
